@@ -1,5 +1,32 @@
 [
     {
+        "title": "CMU-15545 实验环境配置",
+        "uri": "cmu-15545-lab-config",
+        "content": "Mac Intel chip                   Mac M1 chip                 M1           MIT6 S081         Linux     Mac M1                                                                CMU 15545 HOMEPAGE      Ubuntu20 04             Github  README   https   github com cmu db bustub     fork          git clone           bustub     sudo build_support packages sh            sudo  build_support packages sh command not found            chmod  x build_support packages sh             bustub              bash mkdir build cd build cmake    check tests",
+        "objectID": "cmu-15545-lab-config",
+        "date": "2021-06-02T13:30:44.000Z",
+        "lastmod": "2021-06-02T13:30:44.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "CMU-15545",
+            "数据库"
+        ],
+        "categories": [
+            "CMU-15545"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "Ubuntu Apt Command",
         "uri": "ubuntu-apt-command",
         "content": "Ubuntu apt              Linux           apt update  shell sudo apt update                    apt update                           apt upgrade                         shell        sudo apt upgrade                            shell          apt list   upgradeable         sudo apt upgrade       apt install                shell sudo apt install                  y n                  apt install    y Flag  shell sudo apt install  y            apt install                                  version  shell sudo apt install   apt remove purge                shell apt remove                    sudo apt remove                                          sudo apt autoremove apt purge              sudo apt purge       apt list  shell sudo apt list   apt list                                                grep        shell sudo apt list   grep package_name                        shell sudo apt list   installed                    shell sudo apt list   upgradeable   apt show  shell sudo apt show package_name   apt show",
