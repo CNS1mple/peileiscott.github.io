@@ -1,4 +1,4 @@
-# Ubuntu Apt Command
+# Ubuntu apt Command
 
 
 <!--more-->
@@ -36,7 +36,8 @@ sudo apt install -y <package_1> <package_2> ...
 ~~~
 默认情况下`apt install`安装的软件都是最新版本的，如果想安装老版本的软件可以在软件名后面加`=version`
 ~~~shell
-sudo apt install 
+# 安装 mysql-5.7
+sudo apt install mysql-server=5.7
 ~~~
 
 ## `apt remove/purge`
