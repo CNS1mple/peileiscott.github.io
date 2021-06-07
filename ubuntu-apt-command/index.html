@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/peileiscott.top\/ubuntu-apt-command\/"
-        },"genre": "posts","keywords": "apt, Linux","wordcount":  610 ,
+        },"genre": "posts","keywords": "apt, Linux","wordcount":  711 ,
         "url": "https:\/\/peileiscott.top\/ubuntu-apt-command\/","datePublished": "2021-06-02T16:39:50+08:00","dateModified": "2021-06-02T16:39:50+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -152,7 +152,7 @@
         <div class="toc-content" id="toc-content-auto"></div>
     </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Ubuntu下包管理器apt常见命令</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-02">2021-06-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 610 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-02">2021-06-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 711 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;<span id="/ubuntu-apt-command/" class="leancloud_visitors" data-flag-title="Ubuntu下包管理器apt常见命令">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -209,6 +209,24 @@ sudo apt upgrade
 apt list --upgradeable
 <span class="c1"># 更新指定的软件</span>
 sudo apt upgrade &lt;package_1&gt; &lt;package_2&gt; ...
+</code></pre></td></tr></table>
+</div>
+</div><p>有些软件更新时需要输入<code>y/n</code>确认是否安装，如果不想输入的话可以在<code>apt upgrade</code>后面加<code>-y</code> Flag</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt upgrade -y 
+</code></pre></td></tr></table>
+</div>
+</div><p>通常为了方便，我们将上面提到的<code>apt update</code>和<code>apt upgrade</code>写在一行</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade -y
 </code></pre></td></tr></table>
 </div>
 </div><h2 id="apt-install"><code>apt install</code></h2>

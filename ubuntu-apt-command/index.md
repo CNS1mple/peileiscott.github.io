@@ -24,6 +24,14 @@ apt list --upgradeable
 # 更新指定的软件
 sudo apt upgrade <package_1> <package_2> ...
 ~~~
+有些软件更新时需要输入`y/n`确认是否安装，如果不想输入的话可以在`apt upgrade`后面加`-y` Flag
+~~~shell
+sudo apt upgrade -y 
+~~~
+通常为了方便，我们将上面提到的`apt update`和`apt upgrade`写在一行
+~~~shell 
+sudo apt update && sudo apt upgrade -y
+~~~
 
 ## `apt install`
 安装指令软件，执行以下指令
