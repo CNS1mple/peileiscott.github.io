@@ -5,7 +5,7 @@
         <description>apt - 标签 - PeiLeiScott&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1023757106peilei@gmail.com (PeiLeiScott)</managingEditor>
             <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Wed, 02 Jun 2021 16:39:50 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/tags/apt/" rel="self" type="application/rss+xml" /><item>
-    <title>Ubuntu apt Command</title>
+    <title>Ubuntu下包管理器apt常见命令</title>
     <link>https://peileiscott.top/ubuntu-apt-command/</link>
     <pubDate>Wed, 02 Jun 2021 16:39:50 &#43;0800</pubDate>
     <author>PeiLeiScott</author>
