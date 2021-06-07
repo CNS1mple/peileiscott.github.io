@@ -52,5 +52,31 @@
         },
         "lightgallery": false,
         "license": ""
+    },
+    {
+        "title": "LeetCode面试高频题系列一：单链表翻转",
+        "uri": "reverse-linked-list",
+        "content": "https   leetcode cn com problems reverse linked list                                                                                                                        next                                                   next          next              next                                                     1            pre          2         next                                      go     Definition singly linked list  type ListNode struct   Val int Next  ListNode      func reverseList head ListNode  ListNode                           head    nil    head Next    nil   return head      pre                  next     nil             pre      nil pre  curr      ListNode  nil   head curr    nil           next        curr        next    curr Next           curr   Next       curr Next   pre pre   curr curr   next           curr       nil  pre                        return pre           go     Definition singly linked list  type ListNode struct   Val int Next  ListNode      func reverseList head ListNode  ListNode             head    nil    head Next    nil   return head          head                           newHead    reverseList head Next       head          head       2    1  head Next Next   head      head    nil       1   nil  head Next   nil            newHead return newHead",
+        "objectID": "reverse-linked-list",
+        "date": "2021-06-07T04:53:40.000Z",
+        "lastmod": "2021-06-07T04:53:40.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "LeetCode"
+        ],
+        "categories": [
+            "LeetCode"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
     }
 ]
