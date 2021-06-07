@@ -41,7 +41,7 @@ func reverseList(head *ListNode) *ListNode {
         curr = next
     }
 
-    // 注意此时 curr 以及变成了 nil, pre 指向了原链表的最后一个节点(新链表的头结点)
+    // 注意此时 curr 已经变成了 nil, pre 指向了原链表的最后一个节点(新链表的头结点)
     return pre
 }
 ~~~
