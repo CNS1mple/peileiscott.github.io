@@ -4,7 +4,14 @@
         <link>https://peileiscott.top/tags/leetcode/</link>
         <description>LeetCode - 标签 - PeiLeiScott&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1023757106peilei@gmail.com (PeiLeiScott)</managingEditor>
-            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Mon, 07 Jun 2021 12:53:40 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/tags/leetcode/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Wed, 09 Jun 2021 01:06:01 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/tags/leetcode/" rel="self" type="application/rss+xml" /><item>
+    <title>面试常考排序算法——Go语言实现</title>
+    <link>https://peileiscott.top/sort-algorithms/</link>
+    <pubDate>Wed, 09 Jun 2021 01:06:01 &#43;0800</pubDate>
+    <author>PeiLeiScott</author>
+    <guid>https://peileiscott.top/sort-algorithms/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>LeetCode面试高频题系列一：单链表翻转</title>
     <link>https://peileiscott.top/reverse-linked-list/</link>
     <pubDate>Mon, 07 Jun 2021 12:53:40 &#43;0800</pubDate>
