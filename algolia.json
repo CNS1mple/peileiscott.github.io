@@ -80,6 +80,32 @@
         "license": ""
     },
     {
+        "title": "LeetCode面试高频题系列二：K个一组翻转链表",
+        "uri": "reverse-nodes-in-k-group",
+        "content": "https   leetcode cn com problems reverse nodes in k group                                                                    go     Definition singly linked list  type ListNode struct   Val int Next  ListNode      func reverseKGroup head ListNode  k int  ListNode                      head head    nil    head Next    nil    k    1   return head                                                        dummy     ListNode Next  head  pre  left  right    dummy  head  head      0                                            go     Definition singly linked list  type ListNode struct   Val int Next  ListNode           K     func reverseKGroup head ListNode  k int  ListNode                      head head    nil    head Next    nil    k    1   return head                                                        dummy     ListNode Next  head  pre  left  right    dummy  head  head      0                                               O n                            go            func reverseKGroup head ListNode  k int  ListNode                      head head    nil    head Next    nil    k    1   return head      n           p  n    head  0 p    nil   n   p   p Next                                                        dummy     ListNode Next  head  pre  left  right    dummy  head  head       pre  left  right                0    n k  i     pre   pre Next left   left Next right   right Next        0    k  i                right     nil                     right    nil   pre Next   reverseBetween left  right  return dummy Next   right   right Next                                pre Next   reverseBetween left  right     pre                  left pre   left    left               right left   right        Reverse  head  tail                                  https   www peileiscott top reverse linked list  func reverseBetween head  tail ListNode  ListNode   head    tail    head Next    tail   return head   prev  curr    tail  head curr    tail   next    curr Next curr Next   prev prev   curr curr   next   return prev",
+        "objectID": "reverse-nodes-in-k-group",
+        "date": "2021-06-10T07:08:20.000Z",
+        "lastmod": "2021-06-10T07:08:20.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "LeetCode"
+        ],
+        "categories": [
+            "LeetCode"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "面试常考排序算法——Go语言实现",
         "uri": "sort-algorithms",
         "content": "LeetCode    https   leetcode cn com problems sort an array        go func insertionSort nums   int  left  right int       left   1    0    nums j    temp  j     nums j 1    nums j    nums j 1    temp             go func quickSort nums   int  left  right int    left    right   return   index    partition nums  left  right  quickSort nums  left  index 1  quickSort nums  index 1  right    func partition nums   int  left  right int  int                   pos    rand Intn right left 1    left nums left   nums pos    nums pos   nums left  i  j  pivot    left  right  nums left    pivot   j       0  i     sink nums  i  right       right    left  i     nums i   nums left    nums left   nums i  sink nums  left  i 1      func sink nums   int  root  end int      child    2 root   1 child   end   return   child nums child    return   nums root   nums child    nums child   nums root  root   child",
