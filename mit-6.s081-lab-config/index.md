@@ -14,7 +14,7 @@ sudo apt update && sudo apt upgrade
 安装必要软件：
 
 ~~~shell
-sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu 
+sudo apt install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu 
 ~~~
 
 下载并解压`qemu`：
