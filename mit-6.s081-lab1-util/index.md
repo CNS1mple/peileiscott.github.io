@@ -1,4 +1,4 @@
-# Mit-6.S081 lab1-util 详解
+# MIT-6.S081 lab1-util 详解
 
 
 <!--more-->
