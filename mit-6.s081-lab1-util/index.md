@@ -3,7 +3,7 @@
 
 <!--more-->
 
-LAB链接：[https://pdos.csail.mit.edu/6.S081/2020/labs/util.html](https://pdos.csail.mit.edu/6.S081/2020/labs/util.html)
+> LAB链接：[https://pdos.csail.mit.edu/6.S081/2020/labs/util.html](https://pdos.csail.mit.edu/6.S081/2020/labs/util.html)
 
 ## `sleep`
 
