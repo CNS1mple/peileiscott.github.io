@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Mit-6.S081 lab1-util 详解 - PeiLeiScott&#39;s Blog</title><meta name="Description" content="本站主要用来收集整理资料、记录学习过程。"><meta property="og:title" content="Mit-6.S081 lab1-util 详解" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://peileiscott.top/mit-6.s081-lab1-util/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-14T18:45:19&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-14T18:45:19&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/>
+
+<meta name="twitter:title" content="Mit-6.S081 lab1-util 详解"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="PeiLeiScott&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="PeiLeiScott&#39;s Blog">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://peileiscott.top/mit-6.s081-lab1-util/" /><link rel="prev" href="https://peileiscott.top/mit-6.s081-lab-config/" /><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/normalize/normalize.min.css">
+    <noscript><link rel="stylesheet" href="/lib/normalize/normalize.min.css"></noscript><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="stylesheet" href="/css/search.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Mit-6.S081 lab1-util 详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/peileiscott.top\/mit-6.s081-lab1-util\/"
+        },"genre": "posts","keywords": "MIT-6.S081, 操作系统","wordcount":  4012 ,
+        "url": "https:\/\/peileiscott.top\/mit-6.s081-lab1-util\/","datePublished": "2021-06-14T18:45:19+08:00","dateModified": "2021-06-14T18:45:19+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "PeiLeiScott"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+            if (window.localStorage && localStorage.getItem('theme')) {
+                let theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark' || theme === 'black') {
+                    document.body.setAttribute('theme', theme);
+                } else {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            } else {
+                if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') {
+                    document.body.setAttribute('auto');
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                } else {
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            }
+            function getMeta(metaName) {
+                const metas = document.getElementsByTagName('meta'); 
+                for (let i = 0; i < metas.length; i++) {
+                    if (metas[i].getAttribute('name') === metaName) {
+                        return metas[i];
+                    }
+                }
+                return '';
+            }
+            let themeColorMeta = getMeta('theme-color');
+            if (document.body.getAttribute('theme') != 'light') {
+                themeColorMeta.content = '#000000';
+            }
+        </script>
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Mit-6.S081 lab1-util 详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mit-6.s081/"><i class="far fa-folder fa-fw"></i>MIT-6.S081</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-14">2021-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4012 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/mit-6.s081-lab1-util/" class="leancloud_visitors" data-flag-title="Mit-6.S081 lab1-util 详解">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#sleep"><code>sleep</code></a></li>
+    <li><a href="#pingpong"><code>pingpong</code></a></li>
+    <li><a href="#primes"><code>primes</code></a></li>
+    <li><a href="#find"><code>find</code></a></li>
+    <li><a href="#xargs"><code>xargs</code></a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>LAB链接：<a href="https://pdos.csail.mit.edu/6.S081/2020/labs/util.html" target="_blank" rel="noopener noreffer">https://pdos.csail.mit.edu/6.S081/2020/labs/util.html</a></p>
+<h2 id="sleep"><code>sleep</code></h2>
+<p>作为第一个lab的第一个练习，主要用来给我们熟悉下代码框架和c语言的库函数等。</p>
+<blockquote>
+<p>如果对进程调度和系统调用不熟悉的话请先看<a href="https://pdos.csail.mit.edu/6.S081/2020/xv6/book-riscv-rev1.pdf" target="_blank" rel="noopener noreffer">xv6 book</a>第一章的第一节。</p>
+</blockquote>
+<ul>
+<li>根据提示，查看<code>user/echo.c</code>, <code>user/grep.c</code>, <code>user/rm.c</code>源码了解如何获取并使用命令行参数(如果你熟悉c语言的话应该早已了解)，即<code>main</code>函数中传入了两个参数<code>argc</code>和<code>argv</code>，其中<code>agrc</code>表示命令行参数的个数(argument count)，<code>argv</code>表示命令行向量(argument vector)。例如有个可执行程序<code>argstest</code>，当你执行<code>./argstest 1 2 3</code>时，<code>argc</code>为<code>4</code>，<code>argv</code>为<code>{&quot;argstest&quot;, &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, NULL}</code>，注意c语言中最后需要NULL作为终结符。</li>
+<li>知道了命令行参数相关知识之后，根据<code>sleep</code>的参数个数<code>argc</code>应该为2(一个为<code>sleep</code>，另一个为用户指定的睡眠时间)，如果不为2，输出错误信息并退出。</li>
+<li>通过<code>atoi</code>库函数将字符串转化为整数。其中<code>atoi</code>代表<code>Ascii to Integer</code>。</li>
+<li>调用系统调用<code>sleep</code>。至于内核中如何实现系统调用<code>sleep</code>，可以查看<code>kernel/sysproc.c</code>中的<code>sys_sleep</code>函数；系统调用<code>sleep</code>从用户态跳到内核态的过程，可以查看<code>user/usys.S</code>中的相关汇编代码(本人太菜看不懂&hellip;)</li>
+<li>最后将<code>sleep</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
+</ul>
+<p>最终代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> 
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Usage: sleep &lt;number&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+  <span class="n">sleep</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>sleep</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ make qemu
+...
+init: starting sh
+$ sleep <span class="m">10</span>
+<span class="o">(</span>大概睡眠1秒<span class="o">)</span>
+$
+</code></pre></td></tr></table>
+</div>
+</div><p>执行<code>./grade-lab-util sleep</code>验证代码正确性。</p>
+<h2 id="pingpong"><code>pingpong</code></h2>
+<blockquote>
+<p>如果对I/O，文件描述符以及管道知识不熟悉的话请先看<a href="https://pdos.csail.mit.edu/6.S081/2020/xv6/book-riscv-rev1.pdf" target="_blank" rel="noopener noreffer">xv6 book</a>第一章的第二、三节。</p>
+</blockquote>
+<ul>
+<li>首先根据<code>pingpong</code>的使用，如果参数的个数大于1，直接输出错误信息并退出。</li>
+<li>使用<code>pipe()</code>系统调用创建两个管道，将描述符存放在<code>p1[2]</code>和<code>p2[2]</code>，父进程向<code>p1</code>写，从<code>p2</code>读；子进程从<code>p1</code>读，向<code>p2</code>写。</li>
+<li><strong>父进程和子进程的读写顺序</strong>：不使用<code>wait()</code>的情况下父进程应该先写后读，子进程应该先读后写。</li>
+<li>父进程不需要用到<code>p1</code>的读端和<code>p2</code>的写端，因此直接调用<code>close()</code>关闭，然后向<code>p1</code>写入一个字节内容，写完后关闭<code>p1</code>的写端，最后从<code>p2</code>读取内容，如果读取的字节数正好为1，则输出响应信息并关闭<code>p2</code>读端。子进程执行类似操作。</li>
+<li>最后将<code>pingpong</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
+</ul>
+<p>最终代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Read and Write end of a pipe
+</span><span class="c1"></span><span class="cp">#define READ_END 0
+</span><span class="cp">#define WRITE_END 1
+</span><span class="cp"></span>
+<span class="kt">int</span> 
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Usage: pingpong</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Create two pipes: p1 and p2
+</span><span class="c1"></span>  <span class="c1">// Child reads from p1, writes to p2
+</span><span class="c1"></span>  <span class="c1">// Parent reads from p2, writes to p1
+</span><span class="c1"></span>  <span class="kt">int</span> <span class="n">p1</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">p2</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+  <span class="n">pipe</span><span class="p">(</span><span class="n">p1</span><span class="p">);</span>
+  <span class="n">pipe</span><span class="p">(</span><span class="n">p2</span><span class="p">);</span>
+
+  <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">fork</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// Child should read first
+</span><span class="c1"></span>    <span class="n">close</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">READ_END</span><span class="p">],</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">close</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d: received ping</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="c1">// Child sends a byte to parent
+</span><span class="c1"></span>    <span class="n">write</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">],</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// Parent should write first
+</span><span class="c1"></span>    <span class="n">close</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="c1">// Parent sends a byte to child
+</span><span class="c1"></span>    <span class="n">write</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">],</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p1</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">READ_END</span><span class="p">],</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">close</span><span class="p">(</span><span class="n">p2</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%d: received pong</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">getpid</span><span class="p">());</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>pingpong</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ make qemu
+...
+init: starting sh
+$ pingpong
+4: received ping
+3: received pong
+$
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>./grade-lab-util pingpong</code>验证代码正确性。</p>
+<h2 id="primes"><code>primes</code></h2>
+<ul>
+<li>首先通过阅读<a href="https://swtch.com/~rsc/thread/" target="_blank" rel="noopener noreffer">this page</a>了解<code>primes</code>的工作原理：创建一个管道，父进程向管道写入从2到35的整数，子进程从管道读取数据后输出2，并且再次创建一个管道，向新创建的管道写入不是2的倍数的所有数字，依次递归进行下去，直到最后管道里没有任何数据。具体如下图：
+<img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes1.393njen654e0.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes1.393njen654e0.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes1.393njen654e0.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes1.393njen654e0.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes1.393njen654e0.png"
+        title="primes1"
+    />
+<img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes2.1ozv0tktsoow.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes2.1ozv0tktsoow.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes2.1ozv0tktsoow.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes2.1ozv0tktsoow.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/primes2.1ozv0tktsoow.png"
+        title="primes2"
+    /></li>
+<li>根据<code>primes</code>的使用，如果参数的个数大于1，直接输出错误信息并退出。</li>
+<li><code>main</code>函数中，创建一个管道，父进程中先关闭管道的读端，然后向管道写入从2到35的整数，最后关闭管道的写端，<strong>注意此时需要执行<code>wait()</code>系统调用等待子进程执行完毕，否则父进程会在向管道写完数据后直接退出</strong>；子进程调用<code>child()</code>函数执行响应的操作。</li>
+<li><code>child()</code>函数中，首先关闭父进程中创建的管道<code>pp</code>的写端，从<code>pp</code>中读入一个<code>int</code>大小的数据，如果<code>read()</code>返回0，说明管道中没有数据，关闭<code>pp</code>的读端后直接返回；反之，输出从<code>pp</code>中读取到的第一个数<code>i</code>，随后创建当前进程的管道<code>cp</code>，在当前进程中关闭<code>cp</code>的读端后循环向<code>cp</code>中写入所有不是<code>i</code>的倍数，最后关闭<code>pp</code>的读端和<code>cp</code>的写端，调用<code>wait()</code>等待子进程；当前进程的子进程中，关闭<code>pp</code>的读端和<code>cp</code>的写端后，递归调用<code>child()</code>函数。</li>
+<li>最后将<code>primes</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
+</ul>
+<p>最终代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Read and Write end of a pipe
+</span><span class="c1"></span><span class="cp">#define READ_END 0
+</span><span class="cp">#define WRITE_END 1
+</span><span class="cp"></span>
+<span class="c1">// pp, cp stands for parent pipe and child pipe, respectively
+</span><span class="c1"></span><span class="kt">void</span>
+<span class="nf">child</span><span class="p">(</span><span class="kt">int</span> <span class="n">pp</span><span class="p">[])</span>
+<span class="p">{</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&#34;prime %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="n">cp</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+  <span class="n">pipe</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">fork</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="n">child</span><span class="p">(</span><span class="n">cp</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">write</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">num</span><span class="p">));</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">cp</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="n">wait</span><span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+  
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> 
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Usage: primes</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">int</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+  <span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">fork</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">child</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">READ_END</span><span class="p">]);</span>
+    <span class="c1">// Feed the numbers 2 through 35 into the pipe
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">35</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">write</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">i</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">WRITE_END</span><span class="p">]);</span>
+    <span class="n">wait</span><span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>primes</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ make qemu
+...
+init: starting sh
+$ primes
+prime <span class="m">2</span>
+prime <span class="m">3</span>
+prime <span class="m">5</span>
+prime <span class="m">7</span>
+prime <span class="m">11</span>
+prime <span class="m">13</span>
+prime <span class="m">17</span>
+prime <span class="m">19</span>
+prime <span class="m">23</span>
+prime <span class="m">29</span>
+prime <span class="m">31</span>
+$
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>./grade-lab-util primes</code>验证代码正确性。</p>
+<h2 id="find"><code>find</code></h2>
+<blockquote>
+<p>如果对文件系统相关知识不熟悉的话请先看<a href="https://pdos.csail.mit.edu/6.S081/2020/xv6/book-riscv-rev1.pdf" target="_blank" rel="noopener noreffer">xv6 book</a>第一章的第四节。</p>
+</blockquote>
+<ul>
+<li>首先阅读<code>user/ls.c</code>源码了解如何读取文件目录信息以及判断文件类型，对<code>ls.c</code>的分析见下方代码中注释。</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/fs.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">char</span><span class="o">*</span>
+<span class="nf">fmtname</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="c1">// DIRSIZ 在`kernel/fs.h`中定义
+</span><span class="c1"></span>  <span class="c1">// #define DIRSIZ 14
+</span><span class="c1"></span>  <span class="k">static</span> <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">DIRSIZ</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+
+  <span class="c1">// Find first character after last slash.
+</span><span class="c1"></span>  <span class="k">for</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="n">path</span><span class="o">+</span><span class="n">strlen</span><span class="p">(</span><span class="n">path</span><span class="p">);</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="n">path</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span> <span class="n">p</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">;</span>
+  <span class="n">p</span><span class="o">++</span><span class="p">;</span> <span class="c1">// 此时 p 为最后一个 &#34;/&#34; 后的字符串，即文件名。例如当路径为&#34;a/b/cd&#34;时，此时p为&#34;cd&#34;
+</span><span class="c1"></span>
+  <span class="c1">// Return blank-padded name.
+</span><span class="c1"></span>  <span class="c1">// 如果 p 的长度大于 DIRSIZ，直接返回 p
+</span><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DIRSIZ</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+  <span class="c1">// 如果 p 的长度小于 DIRSIZ，则用空格补齐
+</span><span class="c1"></span>  <span class="n">memmove</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">));</span>
+  <span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">),</span> <span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="n">DIRSIZ</span><span class="o">-</span><span class="n">strlen</span><span class="p">(</span><span class="n">p</span><span class="p">));</span>
+  <span class="k">return</span> <span class="n">buf</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="nf">ls</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span> 
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">512</span><span class="p">],</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span> <span class="c1">// 文件描述符 file descriptor
+</span><span class="c1"></span>  <span class="c1">// 定义位于 kernel/fs.h
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">dirent</span> <span class="n">de</span><span class="p">;</span> <span class="c1">// 目录项 directory entry
+</span><span class="c1"></span>  <span class="c1">// 定义位于 kernel/stat.h
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">stat</span> <span class="n">st</span><span class="p">;</span> <span class="c1">// 文件信息 file status
+</span><span class="c1"></span>
+  <span class="c1">// 调用 open() 打开路径 path 并返回相应的文件描述符 fd
+</span><span class="c1"></span>  <span class="k">if</span><span class="p">((</span><span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;ls: cannot open %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 调用 fstat 将 fd 对应的文件信息记录在 st 中
+</span><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="n">fstat</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">st</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;ls: cannot stat %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">switch</span><span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">type</span><span class="p">){</span>
+  <span class="c1">// st.type 为文件时直接返回即可
+</span><span class="c1"></span>  <span class="k">case</span> <span class="nl">T_FILE</span><span class="p">:</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s %d %d %l</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">fmtname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">st</span><span class="p">.</span><span class="n">type</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">ino</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+    <span class="k">break</span><span class="p">;</span>
+
+  <span class="c1">// 当 st.type 为目录时
+</span><span class="c1"></span>  <span class="k">case</span> <span class="nl">T_DIR</span><span class="p">:</span>
+    <span class="c1">// 此处只是限制了路径 path 的长度防止缓存溢出，不是很重要可以忽略
+</span><span class="c1"></span>    <span class="k">if</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">DIRSIZ</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="k">sizeof</span> <span class="n">buf</span><span class="p">){</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;ls: path too long</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// 将 path 的内容拷贝到 buf
+</span><span class="c1"></span>    <span class="n">strcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="c1">// 指针 p 定位到 buf 的最后
+</span><span class="c1"></span>    <span class="n">p</span> <span class="o">=</span> <span class="n">buf</span><span class="o">+</span><span class="n">strlen</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+    <span class="c1">// 在 buf 的最后位置添加 &#34;/&#34;
+</span><span class="c1"></span>    <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span>
+    <span class="c1">// 每次读取一个目录项
+</span><span class="c1"></span>    <span class="k">while</span><span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">de</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">de</span><span class="p">))</span> <span class="o">==</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">de</span><span class="p">)){</span>
+      <span class="c1">// inum == 0 说明无效文件或目录
+</span><span class="c1"></span>      <span class="k">if</span><span class="p">(</span><span class="n">de</span><span class="p">.</span><span class="n">inum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="c1">// 将 de.name 拷贝到 p 中
+</span><span class="c1"></span>      <span class="n">memmove</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">de</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">DIRSIZ</span><span class="p">);</span>
+      <span class="n">p</span><span class="p">[</span><span class="n">DIRSIZ</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="k">if</span><span class="p">(</span><span class="n">stat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">st</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">){</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">&#34;ls: cannot stat %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">buf</span><span class="p">);</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s %d %d %d</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">fmtname</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span> <span class="n">st</span><span class="p">.</span><span class="n">type</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">ino</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="n">size</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// 最后别忘了关闭文件描述符，否则浪费资源
+</span><span class="c1"></span>  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span>
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="c1">// 如果 ls 后面没有参数，默认对当前目录 &#34;.&#34; 执行 ls 命令
+</span><span class="c1"></span>  <span class="k">if</span><span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">){</span>
+    <span class="n">ls</span><span class="p">(</span><span class="s">&#34;.&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="c1">// 对 ls 后面的目录分别执行 ls 命令
+</span><span class="c1"></span>  <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">argc</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">ls</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>根据<code>find</code>的使用，参数的个数应该为3，分别是<code>find</code>、指定目录<code>path</code>、指定文件名<code>filename</code>。</li>
+<li>递归调用<code>find</code>进入子目录寻找，注意不要进入&quot;.&ldquo;和&rdquo;..&ldquo;目录。</li>
+<li>使用<code>strcmp()</code>函数判断两个字符串是否相等。</li>
+<li>将<code>find</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
+</ul>
+<p>最终代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span><span class="lnt">79
+</span><span class="lnt">80
+</span><span class="lnt">81
+</span><span class="lnt">82
+</span><span class="lnt">83
+</span><span class="lnt">84
+</span><span class="lnt">85
+</span><span class="lnt">86
+</span><span class="lnt">87
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/fs.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">char</span><span class="o">*</span>
+<span class="nf">fmtname</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">)</span> 
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+
+  <span class="c1">// Find first character after last slash
+</span><span class="c1"></span>  <span class="k">for</span> <span class="p">(</span><span class="n">p</span> <span class="o">=</span> <span class="n">path</span><span class="o">+</span><span class="n">strlen</span><span class="p">(</span><span class="n">path</span><span class="p">);</span> <span class="n">p</span> <span class="o">&gt;=</span> <span class="n">path</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="n">p</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span> <span class="n">p</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">;</span>
+  <span class="n">p</span><span class="o">++</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span>
+<span class="nf">find</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">)</span> 
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">512</span><span class="p">],</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">fd</span><span class="p">;</span>           <span class="c1">// file descriptor
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">dirent</span> <span class="n">de</span><span class="p">;</span> <span class="c1">// directory entry
+</span><span class="c1"></span>  <span class="k">struct</span> <span class="n">stat</span> <span class="n">st</span><span class="p">;</span>   <span class="c1">// file status
+</span><span class="c1"></span>
+  <span class="k">if</span> <span class="p">((</span><span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;find: cannot open %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">fstat</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">st</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;find: cannot stat %s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">switch</span> <span class="p">(</span><span class="n">st</span><span class="p">.</span><span class="n">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="nl">T_FILE</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">fmtname</span><span class="p">(</span><span class="n">path</span><span class="p">),</span> <span class="n">filename</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;%s</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">break</span><span class="p">;</span>
+
+  <span class="k">case</span> <span class="nl">T_DIR</span><span class="p">:</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">DIRSIZ</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="k">sizeof</span> <span class="n">buf</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">printf</span><span class="p">(</span><span class="s">&#34;find: path too long</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// Add &#39;/&#39;
+</span><span class="c1"></span>    <span class="n">strcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">path</span><span class="p">);</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">buf</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+    <span class="o">*</span><span class="n">p</span><span class="o">++</span> <span class="o">=</span> <span class="sc">&#39;/&#39;</span><span class="p">;</span>
+
+    <span class="k">while</span> <span class="p">(</span><span class="n">read</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">de</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">de</span><span class="p">))</span> <span class="o">==</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">de</span><span class="p">))</span> <span class="p">{</span>
+      <span class="c1">// Invalid directory
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="n">de</span><span class="p">.</span><span class="n">inum</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span> 
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// Should not recurse into &#34;.&#34; or &#34;..&#34;
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="n">strcmp</span><span class="p">(</span><span class="n">de</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#34;.&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">strcmp</span><span class="p">(</span><span class="n">de</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="s">&#34;..&#34;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="n">memmove</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">de</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">DIRSIZ</span><span class="p">);</span>
+      <span class="n">p</span><span class="p">[</span><span class="n">DIRSIZ</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="c1">// Call find recursively
+</span><span class="c1"></span>      <span class="n">find</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">filename</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> 
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Usage: find &lt;path&gt; &lt;filename&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="n">find</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>find</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ make qemu
+...
+init: starting sh
+$ <span class="nb">echo</span> &gt; b
+$ mkdir a
+$ <span class="nb">echo</span> &gt; a/b
+$ find . b
+./b
+./a/b
+$ 
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>./grade-lab-util find</code>验证代码正确性。</p>
+<h2 id="xargs"><code>xargs</code></h2>
+<blockquote>
+<p>如果不熟悉<code>xargs</code>指令可以查看<a href="https://www.linuxcool.com/xargs" target="_blank" rel="noopener noreffer">xargs命令</a>。</p>
+</blockquote>
+<ul>
+<li>首先要知道，我们要实现的<code>xargs</code>每行只从标准输入流获取<strong>一个</strong>额外的命令参数。功能类似下图：
+<img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png"
+        title="xargs"
+    /></li>
+<li>根据<code>xargs</code>的使用，参数的个数至少为2个，<code>xargs</code>、指定的命令<code>command</code>。</li>
+<li><code>kernel/param.h</code>中定义了最大参数个数<code>MAXARG</code>，创建一个大小为<code>MAXARG</code>的数组<code>params</code>用于存放命令参数，将<code>argv</code>中相应的参数拷贝到到<code>params</code>，注意留一个位置用于存放从标准输入读取的那个额外的命令参数。</li>
+<li>从标准输入循环读取命令参数，当遇到<code>\n</code>说明当前行的参数已经读取完毕，将其存放入<code>params</code>后创建一个子进程调用<code>exec()</code>执行对应的指令；如果标准输入中的参数读取完毕，则退出循环。注意父进程中调用<code>wait()</code>等待子进程结束。</li>
+<li>最后将<code>xargs</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
+</ul>
+<p>运行<code>xargs</code>指令：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">$ make qemu
+...
+init: starting sh
+$ sh &lt; xargstest.sh
+$ $ $ $ $ $ hello
+hello
+hello
+$ $   
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>./grade-lab-util xargs</code>验证代码正确性。</p>
+<blockquote>
+<p>最后创建一个<code>time.txt</code>并写入一个数字表示你完成实验所花的时间，执行<code>make grade</code>，如果显示分数为<code>100/100</code>，说明实验全部做完啦~</p>
+</blockquote></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-14</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/mit-6.s081-lab1-util/index.md" target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mit-6.s081/">MIT-6.S081</a>,&nbsp;<a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mit-6.s081-lab-config/" class="prev" rel="prev" title="MIT-6.S081实验环境搭建"><i class="fas fa-angle-left fa-fw"></i>MIT-6.S081实验环境搭建</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://peileiscott.top" target="_blank" rel="noopener noreferrer">PeiLeiScott</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div>
+
+        
+        <div id="ex1" class="modal">
+            <div class="aa-input-container" id="aa-input-container">
+    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for titles or URIs..." name="search" autocomplete="off" />
+    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+    </svg>
+</div>
+
+        </div>
+        <link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"lBnQX5cEz5rozAxpmJQHllwx-gzGzoHsz","appKey":"uFt1oLMnGcWcqFJLDhBIikI3","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","meta":["nick","mail"],"pageSize":10,"placeholder":"Leave your comment here","recordIP":true,"visitor":true}},"data":{"id-1":"PeiLeiScott's Blog","id-2":"PeiLeiScott's Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"YLASGFW0ZN","algoliaIndex":"blog","algoliaSearchKey":"cfab05d37943d240fb4276960d13c8e5","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
