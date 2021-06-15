@@ -457,11 +457,73 @@ $
 > 如果不熟悉`xargs`指令可以查看[xargs命令](https://www.linuxcool.com/xargs)。
 
 + 首先要知道，我们要实现的`xargs`每行只从标准输入流获取**一个**额外的命令参数。功能类似下图：
+
 ![xargs](https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png)
+
 + 根据`xargs`的使用，参数的个数至少为2个，`xargs`、指定的命令`command`。
 + `kernel/param.h`中定义了最大参数个数`MAXARG`，创建一个大小为`MAXARG`的数组`params`用于存放命令参数，将`argv`中相应的参数拷贝到到`params`，注意留一个位置用于存放从标准输入读取的那个额外的命令参数。
 + 从标准输入循环读取命令参数，当遇到`\n`说明当前行的参数已经读取完毕，将其存放入`params`后创建一个子进程调用`exec()`执行对应的指令；如果标准输入中的参数读取完毕，则退出循环。注意父进程中调用`wait()`等待子进程结束。
 + 最后将`xargs`写入`Makefile`中的`UPROGS`。
+
+最终代码如下：
+~~~c
+#include "kernel/types.h"
+#include "kernel/stat.h"
+#include "user/user.h"
+#include "kernel/fs.h"
+#include "kernel/param.h"
+
+int 
+main(int argc, char *argv[]) 
+{
+  if (argc < 2) {
+    fprintf(2, "Usage: xargs <command>\n");
+    exit(1);
+  }
+
+  char *cmd = argv[1];
+  char *params[MAXARG], buf[512];
+  int i;
+
+  if (argc + 1 > MAXARG) {
+    fprintf(2, "Too many arguments\n");
+    exit(1);
+  }
+
+  for (i = 1; i < argc; i++) {
+    params[i-1] = argv[i];
+  }
+  // params[argc-1] is the command argument from standard input
+  // params[argc] is the NULL termination
+  params[argc] = 0;
+
+  while (1) {
+    i = 0;
+    while (1) {
+      int n = read(0, &buf[i], 1);
+      // n == 0 means it reaches the end of the argument from standard input
+      // buf[i] == '\n' means it reaches the end of current line
+      if (n == 0 || buf[i] == '\n') 
+        break;
+      i++;
+    }
+    // i == 0 means there's nothing left to be read
+    if (i == 0) 
+      break;
+    buf[i] = 0;
+    params[argc-1] = buf;
+    if (fork() == 0) {
+      exec(cmd, params);
+      exit(0);
+    } else {
+      // Wait for the child to complete the command
+      wait((int *) 0);
+    }
+  }
+
+  exit(0);
+}
+~~~
 
 运行`xargs`指令：
 ~~~shell

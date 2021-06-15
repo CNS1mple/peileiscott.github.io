@@ -37,7 +37,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/peileiscott.top\/mit-6.s081-lab1-util\/"
-        },"genre": "posts","keywords": "MIT-6.S081, 操作系统","wordcount":  4012 ,
+        },"genre": "posts","keywords": "MIT-6.S081, 操作系统","wordcount":  4253 ,
         "url": "https:\/\/peileiscott.top\/mit-6.s081-lab1-util\/","datePublished": "2021-06-14T18:45:19+08:00","dateModified": "2021-06-14T18:45:19+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
@@ -152,7 +152,7 @@
         <div class="toc-content" id="toc-content-auto"></div>
     </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">MIT-6.S081 lab1-util 详解</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mit-6.s081/"><i class="far fa-folder fa-fw"></i>MIT-6.S081</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-14">2021-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4012 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-14">2021-06-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4253 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;<span id="/mit-6.s081-lab1-util/" class="leancloud_visitors" data-flag-title="MIT-6.S081 lab1-util 详解">
                         <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
                     </span>&nbsp;</div>
@@ -1030,21 +1030,142 @@ $
 <p>如果不熟悉<code>xargs</code>指令可以查看<a href="https://www.linuxcool.com/xargs" target="_blank" rel="noopener noreffer">xargs命令</a>。</p>
 </blockquote>
 <ul>
-<li>首先要知道，我们要实现的<code>xargs</code>每行只从标准输入流获取<strong>一个</strong>额外的命令参数。功能类似下图：
-<img
+<li>首先要知道，我们要实现的<code>xargs</code>每行只从标准输入流获取<strong>一个</strong>额外的命令参数。功能类似下图：</li>
+</ul>
+<p><img
         class="lazyload"
         data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png"
         data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png 2x"
         data-sizes="auto"
         alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/xargs.1w9kuh0cngcg.png"
         title="xargs"
-    /></li>
+    /></p>
+<ul>
 <li>根据<code>xargs</code>的使用，参数的个数至少为2个，<code>xargs</code>、指定的命令<code>command</code>。</li>
 <li><code>kernel/param.h</code>中定义了最大参数个数<code>MAXARG</code>，创建一个大小为<code>MAXARG</code>的数组<code>params</code>用于存放命令参数，将<code>argv</code>中相应的参数拷贝到到<code>params</code>，注意留一个位置用于存放从标准输入读取的那个额外的命令参数。</li>
 <li>从标准输入循环读取命令参数，当遇到<code>\n</code>说明当前行的参数已经读取完毕，将其存放入<code>params</code>后创建一个子进程调用<code>exec()</code>执行对应的指令；如果标准输入中的参数读取完毕，则退出循环。注意父进程中调用<code>wait()</code>等待子进程结束。</li>
 <li>最后将<code>xargs</code>写入<code>Makefile</code>中的<code>UPROGS</code>。</li>
 </ul>
-<p>运行<code>xargs</code>指令：</p>
+<p>最终代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c" data-lang="c"><span class="cp">#include</span> <span class="cpf">&#34;kernel/types.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/stat.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;user/user.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/fs.h&#34;</span><span class="cp">
+</span><span class="cp">#include</span> <span class="cpf">&#34;kernel/param.h&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="kt">int</span> 
+<span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> 
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Usage: xargs &lt;command&gt;</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kt">char</span> <span class="o">*</span><span class="n">cmd</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">params</span><span class="p">[</span><span class="n">MAXARG</span><span class="p">],</span> <span class="n">buf</span><span class="p">[</span><span class="mi">512</span><span class="p">];</span>
+  <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;</span> <span class="n">MAXARG</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#34;Too many arguments</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">argc</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">params</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="c1">// params[argc-1] is the command argument from standard input
+</span><span class="c1"></span>  <span class="c1">// params[argc] is the NULL termination
+</span><span class="c1"></span>  <span class="n">params</span><span class="p">[</span><span class="n">argc</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">);</span>
+      <span class="c1">// n == 0 means it reaches the end of the argument from standard input
+</span><span class="c1"></span>      <span class="c1">// buf[i] == &#39;\n&#39; means it reaches the end of current line
+</span><span class="c1"></span>      <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;\n&#39;</span><span class="p">)</span> 
+        <span class="k">break</span><span class="p">;</span>
+      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="c1">// i == 0 means there&#39;s nothing left to be read
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> 
+      <span class="k">break</span><span class="p">;</span>
+    <span class="n">buf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">params</span><span class="p">[</span><span class="n">argc</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">buf</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">fork</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">params</span><span class="p">);</span>
+      <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="c1">// Wait for the child to complete the command
+</span><span class="c1"></span>      <span class="n">wait</span><span class="p">((</span><span class="kt">int</span> <span class="o">*</span><span class="p">)</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>运行<code>xargs</code>指令：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
