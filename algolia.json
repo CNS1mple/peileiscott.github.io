@@ -108,6 +108,33 @@
         "license": ""
     },
     {
+        "title": "MIT-6.S081 lab2-syscall 详解",
+        "uri": "mit-6.s081-lab2-syscall",
+        "content": "LAB   https   pdos csail mit edu 6 S081 2020 labs syscall html System call tracing        trace      mask     mask           1                                        pid         name     return value              kernel syscall h          define SYS_trace 22        trace        c    System call numbers  define SYS_fork 1  define SYS_exit 2  define SYS_wait 3  define SYS_pipe 4  define SYS_read 5  define SYS_kill 6  define SYS_exec 7  define SYS_fstat 8  define SYS_chdir 9  define SYS_dup 10  define SYS_getpid 11  define SYS_sbrk 12  define SYS_sleep 13  define SYS_uptime 14  define SYS_open 15  define SYS_write 16  define SYS_mknod 17  define SYS_unlink 18  define SYS_link 19  define SYS_mkdir 20  define SYS_close 21  define SYS_trace 22    trace     mask 32     32   1 1023 3  syscall read    966 3  syscall read    70 3  syscall read    0                                                   U _trace   Makefile  UPROGS    make qemu          user trace c trace      user user h   trace       prototype  user usys pl   trace              kernel syscall h   trace                make qemu                     trace 32 grep hello README      kernel proc h proc           tracemask  kernel sysproc c     systrace        trace       mask         trace_mask    kernel proc c  fork           np  tracemask   p  tracemask       trace mask           kernel syscall c syscall                                 syscallnames            systrace          syscalls               GitHub Commit       grade lab syscall trace                                Sysinfo   U _sysinfotest   Makefile  UPROGS          sysinfo       trace             kernel sysproc c     syssysinfo           freemem     nproc     sysinfo               freemem nproc              copyout      kernel sysfile c  sysfstat     kernel file c  filestat       kernel kalloc c       kfree_memory                  kalloc c                  freelist          PGSIZE 4K             freelist                 kernel proc c       proc_count            UNUSED             proc c        proc NPROC                 UNUSED                     make qemu     sysproc c               xv6 book     4               kernel defs h        defs h                           GitHub Commit       grade lab syscall sysinfo                 time txt                      make grade        35 35",
+        "objectID": "mit-6.s081-lab2-syscall",
+        "date": "2021-06-18T08:18:54.000Z",
+        "lastmod": "2021-06-18T08:18:54.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "MIT-6.S081",
+            "操作系统"
+        ],
+        "categories": [
+            "MIT-6.S081"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "LeetCode面试高频题系列一：单链表翻转",
         "uri": "reverse-linked-list",
         "content": "https   leetcode cn com problems reverse linked list                                                                                                                        next                                                   next          next              next                                                     1            pre          2         next                                      go     Definition singly linked list  type ListNode struct   Val int Next  ListNode      func reverseList head ListNode  ListNode                           head    nil    head Next    nil   return head      pre                  next     nil             pre      nil pre  curr      ListNode  nil   head curr    nil           next        curr        next    curr Next           curr   Next       curr Next   pre pre   curr curr   next           curr       nil  pre                        return pre           go     Definition singly linked list  type ListNode struct   Val int Next  ListNode      func reverseList head ListNode  ListNode             head    nil    head Next    nil   return head          head                           newHead    reverseList head Next       head          head       2    1  head Next Next   head      head    nil       1   nil  head Next   nil            newHead return newHead",

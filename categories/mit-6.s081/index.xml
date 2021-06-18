@@ -4,7 +4,14 @@
         <link>https://peileiscott.top/categories/mit-6.s081/</link>
         <description>MIT-6.S081 - 分类 - PeiLeiScott&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1023757106peilei@gmail.com (PeiLeiScott)</managingEditor>
-            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Mon, 14 Jun 2021 18:45:19 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/categories/mit-6.s081/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Fri, 18 Jun 2021 16:18:54 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/categories/mit-6.s081/" rel="self" type="application/rss+xml" /><item>
+    <title>MIT-6.S081 lab2-syscall 详解</title>
+    <link>https://peileiscott.top/mit-6.s081-lab2-syscall/</link>
+    <pubDate>Fri, 18 Jun 2021 16:18:54 &#43;0800</pubDate>
+    <author>PeiLeiScott</author>
+    <guid>https://peileiscott.top/mit-6.s081-lab2-syscall/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>MIT-6.S081 lab1-util 详解</title>
     <link>https://peileiscott.top/mit-6.s081-lab1-util/</link>
     <pubDate>Mon, 14 Jun 2021 18:45:19 &#43;0800</pubDate>
