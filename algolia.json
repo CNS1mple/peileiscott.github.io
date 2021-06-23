@@ -27,6 +27,33 @@
         "license": ""
     },
     {
+        "title": "CS144 lab0 详解",
+        "uri": "cs144-lab0",
+        "content": "https   cs144 github io assignments lab0 pdf build prerequisite                 Ubuntu20 04                                       g    version   8  clang tidy  version   6 7  clang format  version   6 7             clang tidy 7   clang format 7  cmake  version    3  libpcap dev git iptables mininet  version    2 2 0  tcpdump telnet wireshark socat netcat openbsd GNU coreutils bash doxygen graphviz     apt list   installed   grep                sudo apt install        Fetch Web page        http   cs144 keithw org hello          Hello  CS144         telnet cs144 keithw org http                   hello HTTP 1 1                    HTTP 1 1       hello        Host  cs144 keithw org                host    Connection  close                                                                                    Send yourself email             QQ                 Listening connecting                netcat  lnvp 9090                      telnet localhost 9090                    Connection received 127 0 0 1 50436                                                              fetching building starter code  shell git clone https   github com cs144 sponge cd sponge mkdir build cd build            clang tidy 7   clang format 7             CLANGTIDY clang tidy 7 CLANGFORMAT clang foramt 7 cmake      Writing webget                       C          libsponge util file descriptor hh libsponge util socket hh libsponge util address hh            webget cc  getURL                   doctests socketexample_2 cc      TCPSocket                     API                     TCPSocket                          fetch web page      HTTP          r n                TCPSocket          Connection  close                                                         EOF  end file                TCPSocket             CPP void get_URL const string  host  const string  path       code here     will need connect  http  service    computer whose name  host  string     request URL path given  path  string     Create TCP socket connect  http  service host TCPSocket socket  socket connect Address host   http        you ll need print everything server sends back      not just one call read      everything  until reach     eof   end file      Send HTTP request server socket write  GET     path     HTTP 1 1 r nHost      host     r n r n       Tell server it s not going send requests socket shutdown SHUT_WR      Print everything server sends back   socket eof      cout _buf    bool endinput   false  sizet bytes_written   0  sizet bytes_read   0               CPP ByteStream  ByteStream const sizet capacity    capacity capacity     size_t ByteStream  write const string  data     remaining_capacity      0    return 0    sizet len2write   min remainingcapacity    data size      size_t   0    len2write  i      buf pushback data i      byteswritten    len2write  return len2write         param in  len bytes will copied output side buffer string ByteStream  peekoutput const sizet len  const   sizet len2peek   min buffersize    len   return string   assign buf begin    buf begin     len2peek          param in  len bytes will removed output side buffer void ByteStream  popoutput const sizet len    sizet len2pop   min buffersize    len    size_t   0    len2pop  i      buf popfront      bytesread    len2pop        Read  i e   copy pop  next  len  bytes stream      param in  len bytes will popped returned      returns string std  string ByteStream  read const size_t len    string ret   peek_output len   pop_output len   return ret    void ByteStream  endinput     end_input   true    bool ByteStream  inputended   const   return end_input    sizet ByteStream  buffersize   const   return _buf size      bool ByteStream  bufferempty   const   return buffersize      0    bool ByteStream  eof   const   return endinput     buffer_size      0     sizet ByteStream  byteswritten   const   return byteswritten    sizet ByteStream  bytesread   const   return bytesread    sizet ByteStream  remainingcapacity   const   return capacity   buf size         build     make     make check_lab0              make format",
+        "objectID": "cs144-lab0",
+        "date": "2021-06-23T15:55:44.000Z",
+        "lastmod": "2021-06-23T15:55:44.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "CS144",
+            "计算机网络"
+        ],
+        "categories": [
+            "CS144"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "Ubuntu下包管理器apt常见命令",
         "uri": "ubuntu-apt-command",
         "content": "Ubuntu apt              Linux           apt update  shell sudo apt update                    apt update                           apt upgrade                         shell        sudo apt upgrade                            shell          apt list   upgradeable         sudo apt upgrade                  y n                  apt upgrade    y Flag  shell sudo apt upgrade  y                  apt update apt upgrade      shell sudo apt update    sudo apt upgrade  y   apt install                shell sudo apt install                  y n                  apt install    y Flag  shell sudo apt install  y            apt install                                  version  shell    mysql 5 7 sudo apt install mysql server 5 7   apt remove purge                shell apt remove                    sudo apt remove                                          sudo apt autoremove apt purge              sudo apt purge       apt list  shell sudo apt list   apt list                                                grep        shell sudo apt list   grep package_name                        shell sudo apt list   installed                    shell sudo apt list   upgradeable   apt show  shell sudo apt show package_name   apt show",

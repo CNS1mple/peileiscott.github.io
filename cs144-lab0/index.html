@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CS144 lab0 详解 - PeiLeiScott&#39;s Blog</title><meta name="Description" content="本站主要用来收集整理资料、记录学习过程。"><meta property="og:title" content="CS144 lab0 详解" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://peileiscott.top/cs144-lab0/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-23T23:55:44&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-23T23:55:44&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/>
+
+<meta name="twitter:title" content="CS144 lab0 详解"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="PeiLeiScott&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="PeiLeiScott&#39;s Blog">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://peileiscott.top/cs144-lab0/" /><link rel="prev" href="https://peileiscott.top/mit-6.s081-lab2-syscall/" /><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/normalize/normalize.min.css">
+    <noscript><link rel="stylesheet" href="/lib/normalize/normalize.min.css"></noscript><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="stylesheet" href="/css/search.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CS144 lab0 详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/peileiscott.top\/cs144-lab0\/"
+        },"genre": "posts","keywords": "CS144, 计算机网络","wordcount":  2054 ,
+        "url": "https:\/\/peileiscott.top\/cs144-lab0\/","datePublished": "2021-06-23T23:55:44+08:00","dateModified": "2021-06-23T23:55:44+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "PeiLeiScott"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+            if (window.localStorage && localStorage.getItem('theme')) {
+                let theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark' || theme === 'black') {
+                    document.body.setAttribute('theme', theme);
+                } else {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            } else {
+                if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') {
+                    document.body.setAttribute('auto');
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                } else {
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            }
+            function getMeta(metaName) {
+                const metas = document.getElementsByTagName('meta'); 
+                for (let i = 0; i < metas.length; i++) {
+                    if (metas[i].getAttribute('name') === metaName) {
+                        return metas[i];
+                    }
+                }
+                return '';
+            }
+            let themeColorMeta = getMeta('theme-color');
+            if (document.body.getAttribute('theme') != 'light') {
+                themeColorMeta.content = '#000000';
+            }
+        </script>
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS144 lab0 详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cs144/"><i class="far fa-folder fa-fw"></i>CS144</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-23">2021-06-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2054 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;<span id="/cs144-lab0/" class="leancloud_visitors" data-flag-title="CS144 lab0 详解">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#build-prerequisite"><code>build prerequisite</code></a></li>
+    <li><a href="#fetch-a-web-page"><code>Fetch a Web page</code></a></li>
+    <li><a href="#send-yourself-an-email"><code>Send yourself an email</code></a></li>
+    <li><a href="#listening-and-connecting"><code>Listening and connecting</code></a></li>
+    <li><a href="#fetching-and-building-the-starter-code"><code>fetching and building the starter code</code></a></li>
+    <li><a href="#writing-webget"><code>Writing webget</code></a></li>
+    <li><a href="#an-in-memory-reliable-byte-stream"><code>An in-memory reliable byte stream</code></a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>实验指导说明：<a href="https://cs144.github.io/assignments/lab0.pdf" target="_blank" rel="noopener noreffer">https://cs144.github.io/assignments/lab0.pdf</a></p>
+</blockquote>
+<h2 id="build-prerequisite"><code>build prerequisite</code></h2>
+<blockquote>
+<p>本人实验环境：阿里云服务器 Ubuntu20.04，其余环境的配置请参考官方提供的<a href="https://web.stanford.edu/class/cs144/vm_howto/" target="_blank" rel="noopener noreffer">实验环境配置指导</a>。</p>
+</blockquote>
+<p>实验前需要下载以下软件：</p>
+<ul>
+<li>g++ (version &gt; 8)</li>
+<li>clang-tidy (version = 6或7)</li>
+<li>clang-format (version = 6或7)</li>
+</ul>
+<blockquote>
+<p>其中本人下载的为 clang-tidy-7 和 clang-format-7。</p>
+</blockquote>
+<ul>
+<li>cmake (version &gt;= 3)</li>
+<li>libpcap-dev</li>
+<li>git</li>
+<li>iptables</li>
+<li>mininet (version &gt;= 2.2.0)</li>
+<li>tcpdump</li>
+<li>telnet</li>
+<li>wireshark</li>
+<li>socat</li>
+<li>netcat-openbsd</li>
+<li>GNU coreutils</li>
+<li>bash</li>
+<li>doxygen</li>
+<li>graphviz</li>
+</ul>
+<p>可以通过<code>apt list --installed | grep &lt;software_name&gt;</code>查看缺少哪些软件，然后再运行<code>sudo  apt install &lt;software_name&gt;</code>安装即可。</p>
+<h2 id="fetch-a-web-page"><code>Fetch a Web page</code></h2>
+<p>使用浏览器访问<a href="http://cs144.keithw.org/hello" target="_blank" rel="noopener noreffer">http://cs144.keithw.org/hello</a>，发现只有一行文字：<code>Hello, CS144!</code>。在命令行中输入<code>telnet cs144.keithw.org http</code>，得到结果如下图：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-1.4vs760bsep00.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-1.4vs760bsep00.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-1.4vs760bsep00.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-1.4vs760bsep00.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-1.4vs760bsep00.png"
+        title="cs144-lab0-1"
+    /></p>
+<p>随后依次输入：</p>
+<ul>
+<li><code>GET /hello HTTP/1.1</code>并敲入回车。这一行指令表示向服务器发送在<code>HTTP/1.1</code>下获取路径为<code>/hello</code>的数据的请求。</li>
+<li><code>Host: cs144.keithw.org</code>并敲入回车。这一行指令告诉服务器<code>host</code>地址。</li>
+<li><code>Connection: close</code>并敲入回车。这一行指令告诉服务器客户的请求已经发送完毕，服务器只要发送完数据就可以断开连接。</li>
+<li>注意此时还需要敲一下回车。</li>
+</ul>
+<p>如果一切都顺利的话，应该能看到下图中的结果：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-2.fjvrhnv2vf4.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-2.fjvrhnv2vf4.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-2.fjvrhnv2vf4.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-2.fjvrhnv2vf4.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-2.fjvrhnv2vf4.png"
+        title="cs144-lab0-2"
+    /></p>
+<h2 id="send-yourself-an-email"><code>Send yourself an email</code></h2>
+<p>这个由于没有官方账号，用QQ邮箱测试也一直连接不上，故跳过。</p>
+<h2 id="listening-and-connecting"><code>Listening and connecting</code></h2>
+<p>打开两个终端，其中一个终端输入<code>netcat -lnvp 9090</code>创建服务器开启监听，如下图：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-3.51bsa5rx3u00.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-3.51bsa5rx3u00.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-3.51bsa5rx3u00.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-3.51bsa5rx3u00.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-3.51bsa5rx3u00.png"
+        title="cs144-lab0-3"
+    /></p>
+<p>另一个终端输入<code>telnet localhost 9090</code>连接服务器，如下图：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-4.1rb2aqcl19eo.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-4.1rb2aqcl19eo.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-4.1rb2aqcl19eo.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-4.1rb2aqcl19eo.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab0-4.1rb2aqcl19eo.png"
+        title="cs144-lab0-4"
+    /></p>
+<p>同时另一个终端显示<code>Connection received on 127.0.0.1 50436</code>，表示已经连接成功。然后在任意一个窗口输入内容，可以发现另一个窗口显示同样的内容，说明数据成功地在服务器和客户端之间传输。</p>
+<h2 id="fetching-and-building-the-starter-code"><code>fetching and building the starter code</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-shell" data-lang="shell">git clone https://github.com/cs144/sponge
+<span class="nb">cd</span> sponge
+mkdir build
+<span class="nb">cd</span> build
+<span class="c1"># 由于本人前面安装的为 clang-tidy-7 和 clang-format-7，故此时需要进行相应设置</span>
+<span class="nv">CLANG_TIDY</span><span class="o">=</span>clang-tidy-7 <span class="nv">CLANG_FORMAT</span><span class="o">=</span>clang-foramt-7 cmake ..
+make
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="writing-webget"><code>Writing webget</code></h2>
+<blockquote>
+<p>在正式敲代码之前务必仔细阅读实验指导中对C++的要求和说明以及<code>libsponge/util/file descriptor.hh</code>，<code>libsponge/util/socket.hh</code>，<code>libsponge/util/address.hh</code>。</p>
+</blockquote>
+<p>本实验的目的就是完成<code>webget.cc</code>中的<code>get_URL</code>函数，实现对网页数据的获取。首先阅读下<code>doctests/socket_example_2.cc</code>中是如何创建<code>TCPSocket</code>以及建立连接，发送并读取数据。再了解了相关API后，我们只需要依次进行以下操作：</p>
+<ul>
+<li>创建一个<code>TCPSocket</code>并与服务器建立连接。</li>
+<li>向服务器发送请求，格式参照前面<code>fetch a web page</code>部分，注意在<code>HTTP</code>中每行的结尾应该为<code>\r\n</code>。</li>
+<li>发送完请求后，客户端应该关闭<code>TCPSocket</code>的写功能，对应前面的<code>Connection: close</code>，告诉服务器请求已经发送完毕，服务器只要回复完数据后就可以立刻断开连接。</li>
+<li>循环读取从服务器发送过来的信息，直到遇到<code>EOF (end of file)</code>。</li>
+<li>最后记得需要关闭前面创建的<code>TCPSocket</code>。</li>
+</ul>
+<p>最终代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="kt">void</span> <span class="nf">get_URL</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">host</span><span class="p">,</span> <span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">path</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Your code here.
+</span><span class="c1"></span>
+    <span class="c1">// You will need to connect to the &#34;http&#34; service on
+</span><span class="c1"></span>    <span class="c1">// the computer whose name is in the &#34;host&#34; string,
+</span><span class="c1"></span>    <span class="c1">// then request the URL path given in the &#34;path&#34; string.
+</span><span class="c1"></span>
+    <span class="c1">// Create a TCP socket and connect to the &#34;http&#34; service on host
+</span><span class="c1"></span>    <span class="n">TCPSocket</span> <span class="n">socket</span><span class="p">;</span>
+    <span class="n">socket</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="s">&#34;http&#34;</span><span class="p">));</span>
+
+    <span class="c1">// Then you&#39;ll need to print out everything the server sends back,
+</span><span class="c1"></span>    <span class="c1">// (not just one call to read() -- everything) until you reach
+</span><span class="c1"></span>    <span class="c1">// the &#34;eof&#34; (end of file).
+</span><span class="c1"></span>
+    <span class="c1">// Send HTTP request to the server
+</span><span class="c1"></span>    <span class="n">socket</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#34;GET &#34;</span> <span class="o">+</span> <span class="n">path</span> <span class="o">+</span> <span class="s">&#34; HTTP/1.1</span><span class="se">\r\n</span><span class="s">Host: &#34;</span> <span class="o">+</span> <span class="n">host</span> <span class="o">+</span> <span class="s">&#34;</span><span class="se">\r\n\r\n</span><span class="s">&#34;</span><span class="p">);</span>
+    <span class="c1">// Tell the server that it&#39;s not going to send any more requests
+</span><span class="c1"></span>    <span class="n">socket</span><span class="p">.</span><span class="n">shutdown</span><span class="p">(</span><span class="n">SHUT_WR</span><span class="p">);</span>
+
+    <span class="c1">// Print out everything the server sends back
+</span><span class="c1"></span>    <span class="k">while</span> <span class="p">(</span><span class="o">!</span><span class="n">socket</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">socket</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Close the socket
+</span><span class="c1"></span>    <span class="n">socket</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+
+    <span class="c1">// cerr &lt;&lt; &#34;Function called: get_URL(&#34; &lt;&lt; host &lt;&lt; &#34;, &#34; &lt;&lt; path &lt;&lt; &#34;).\n&#34;;
+</span><span class="c1"></span>    <span class="c1">// cerr &lt;&lt; &#34;Warning: get_URL() has not been implemented yet.\n&#34;;
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在<code>build</code>目录下执行<code>make</code>，通过运行<code>./apps/webget cs144.keithw.org /hello</code>和<code>make check_webget</code>来验证代码正确性。</p>
+<h2 id="an-in-memory-reliable-byte-stream"><code>An in-memory reliable byte stream</code></h2>
+<p>简单来说，就是要实现一个用来支持给<strong>输入端写入数据</strong>和<strong>输出端读取数据</strong>的字节流缓冲区。由于缓存区的数据需要满足先进先出的原则，这里我采用的是<code>deque</code>(也可以使用<code>queue</code>)，同时根据提示以及类中函数说明，我们还需要定义几个变量：缓存区的容量、输入端是否写入完毕、以及写入和读取的字节数。变量定义代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP">    <span class="n">size_t</span> <span class="n">_capacity</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">_buf</span><span class="p">{};</span>
+    <span class="kt">bool</span> <span class="n">_end_input</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">_bytes_written</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">_bytes_read</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>函数实现代码如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="n">ByteStream</span><span class="o">::</span><span class="n">ByteStream</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">capacity</span><span class="p">)</span> <span class="o">:</span> <span class="n">_capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="n">size_t</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">remaining_capacity</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">size_t</span> <span class="n">len2write</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">remaining_capacity</span><span class="p">(),</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len2write</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_buf</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="n">_bytes_written</span> <span class="o">+=</span> <span class="n">len2write</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">len2write</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//! \param[in] len bytes will be copied from the output side of the buffer
+</span><span class="c1"></span><span class="n">string</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">peek_output</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">len</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="n">size_t</span> <span class="n">len2peek</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">(),</span> <span class="n">len</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nf">string</span><span class="p">().</span><span class="n">assign</span><span class="p">(</span><span class="n">_buf</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">_buf</span><span class="p">.</span><span class="n">begin</span><span class="p">()</span> <span class="o">+</span> <span class="n">len2peek</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//! \param[in] len bytes will be removed from the output side of the buffer
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">pop_output</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">size_t</span> <span class="n">len2pop</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">buffer_size</span><span class="p">(),</span> <span class="n">len</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">len2pop</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_buf</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="n">_bytes_read</span> <span class="o">+=</span> <span class="n">len2pop</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">//! Read (i.e., copy and then pop) the next &#34;len&#34; bytes of the stream
+</span><span class="c1">//! \param[in] len bytes will be popped and returned
+</span><span class="c1">//! \returns a string
+</span><span class="c1"></span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">read</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">string</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">peek_output</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+    <span class="n">pop_output</span><span class="p">(</span><span class="n">len</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">end_input</span><span class="p">()</span> <span class="p">{</span> <span class="n">_end_input</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">input_ended</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_end_input</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">buffer_size</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_buf</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">buffer_empty</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">buffer_size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">eof</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_end_input</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">buffer_size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">bytes_written</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_bytes_written</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">bytes_read</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_bytes_read</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">ByteStream</span><span class="o">::</span><span class="n">remaining_capacity</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_capacity</span> <span class="o">-</span> <span class="n">_buf</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在<code>build</code>目录下执行<code>make</code>，通过运行<code>make check_lab0</code>验证代码正确性。<strong>记得最后运行<code>make format</code>将代码格式化。</strong></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cs144-lab0/index.md" target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cs144/">CS144</a>,&nbsp;<a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/mit-6.s081-lab2-syscall/" class="prev" rel="prev" title="MIT-6.S081 lab2-syscall 详解"><i class="fas fa-angle-left fa-fw"></i>MIT-6.S081 lab2-syscall 详解</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://peileiscott.top" target="_blank" rel="noopener noreferrer">PeiLeiScott</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div>
+
+        
+        <div id="ex1" class="modal">
+            <div class="aa-input-container" id="aa-input-container">
+    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for titles or URIs..." name="search" autocomplete="off" />
+    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+    </svg>
+</div>
+
+        </div>
+        <link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"lBnQX5cEz5rozAxpmJQHllwx-gzGzoHsz","appKey":"uFt1oLMnGcWcqFJLDhBIikI3","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","meta":["nick","mail"],"pageSize":10,"placeholder":"Leave your comment here","recordIP":true,"visitor":true}},"data":{"id-1":"PeiLeiScott's Blog","id-2":"PeiLeiScott's Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"YLASGFW0ZN","algoliaIndex":"blog","algoliaSearchKey":"cfab05d37943d240fb4276960d13c8e5","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
