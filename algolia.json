@@ -54,6 +54,32 @@
         "license": ""
     },
     {
+        "title": "CS144 lab1 详解",
+        "uri": "cs144-lab1",
+        "content": "https   cs144 github io assignments lab1 pdf                 TCP  substrings segments                   lab0    byte_stream                                                           substring                     bytestream       streamassembler               capacity               substring                                            byte_stream            substring       index                                      eof                                                     CPP ReassemblerTestHarness test 8   test execute SubmitSegment  abc   0    test execute BytesAssembled 3    test execute NotAtEof     test execute SubmitSegment  ghX   6  with_eof true    test execute BytesAssembled 3    test execute NotAtEof     test execute SubmitSegment  cdefg   2    test execute BytesAssembled 8    test execute BytesAvailable  abcdefgh     test execute NotAtEof       map         map   substring        stream_reassembler hh  CPP std  map index2byte    bool _eof false   sizet head_index   0  sizet unassembled_bytes   0  ByteStream _output         void DUMMY_CODE Targs          unused        using namespace std  StreamReassembler  StreamReassembler const sizet capacity    output capacity   _capacity capacity          details function accepts substring  aka segment  bytes      possibly out of order  logical stream  assembles newly     contiguous substrings writes output stream order  void StreamReassembler  pushsubstring const string  data  const sizet index  const bool eof       DUMMY_CODE data  index  eof    index    headindex   output remainingcapacity      return     index   data size   headindex   output remainingcapacity      flag   false       size_t count   0   sizet   index    head_index    index2byte find i     index2byte end      index2byte i    data i   index      count    unassembledbytes        string str        sizet   head_index  index2byte find i     index2byte end    i      str    index2byte i   index2byte erase i   headindex    unassembledbytes      _output write str    flag    eof    _eof   true     _eof    empty      output endinput        sizet StreamReassembler  unassembledbytes   const   return unassembledbytes    bool StreamReassembler  empty   const   return unassembled_bytes      0                                                                    deque   map         map             bytes                                           bitmap                      deque                                stream_reassembler hh  CPP std  deque _buf  std  deque _bitmap  bool _eof false   sizet head_index   0  sizet unassembled_bytes   0  ByteStream _output         void DUMMY_CODE Targs          unused        using namespace std  StreamReassembler  StreamReassembler const size_t capacity    buf capacity    0    bitmap capacity  false   output capacity   capacity capacity          details function accepts substring  aka segment  bytes      possibly out of order  logical stream  assembles newly     contiguous substrings writes output stream order  void StreamReassembler  pushsubstring const string  data  const sizet index  const bool eof       DUMMY_CODE data  index  eof    index    headindex   output remainingcapacity      return     index   data size     headindex     bitmap i   head_index     buf i   head_index    data i   index   bitmap i   head_index    true  unassembledbytes        string str        _bitmap front      str    _buf front    buf popfront    buf pushback   0    bitmap popfront    bitmap pushback false     size_t len   str size     len   0    unassembledbytes    len  headindex    len  _output write str        _eof    empty      output endinput        sizet StreamReassembler  unassembledbytes   const   return unassembledbytes    bool StreamReassembler  empty   const   return unassembled_bytes      0",
+        "objectID": "cs144-lab1",
+        "date": "2021-06-26T08:20:44.000Z",
+        "lastmod": "2021-06-26T08:20:44.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "CS144，计算机网络"
+        ],
+        "categories": [
+            "CS144"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "Ubuntu下包管理器apt常见命令",
         "uri": "ubuntu-apt-command",
         "content": "Ubuntu apt              Linux           apt update  shell sudo apt update                    apt update                           apt upgrade                         shell        sudo apt upgrade                            shell          apt list   upgradeable         sudo apt upgrade                  y n                  apt upgrade    y Flag  shell sudo apt upgrade  y                  apt update apt upgrade      shell sudo apt update    sudo apt upgrade  y   apt install                shell sudo apt install                  y n                  apt install    y Flag  shell sudo apt install  y            apt install                                  version  shell    mysql 5 7 sudo apt install mysql server 5 7   apt remove purge                shell apt remove                    sudo apt remove                                          sudo apt autoremove apt purge              sudo apt purge       apt list  shell sudo apt list   apt list                                                grep        shell sudo apt list   grep package_name                        shell sudo apt list   installed                    shell sudo apt list   upgradeable   apt show  shell sudo apt show package_name   apt show",

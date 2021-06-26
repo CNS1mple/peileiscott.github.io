@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CS144 lab1 详解 - PeiLeiScott&#39;s Blog</title><meta name="Description" content="本站主要用来收集整理资料、记录学习过程。"><meta property="og:title" content="CS144 lab1 详解" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://peileiscott.top/cs144-lab1/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-26T16:20:44&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-26T16:20:44&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/>
+
+<meta name="twitter:title" content="CS144 lab1 详解"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="PeiLeiScott&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="PeiLeiScott&#39;s Blog">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://peileiscott.top/cs144-lab1/" /><link rel="prev" href="https://peileiscott.top/cs144-lab0/" /><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/normalize/normalize.min.css">
+    <noscript><link rel="stylesheet" href="/lib/normalize/normalize.min.css"></noscript><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="stylesheet" href="/css/search.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CS144 lab1 详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/peileiscott.top\/cs144-lab1\/"
+        },"genre": "posts","keywords": "CS144，计算机网络","wordcount":  1517 ,
+        "url": "https:\/\/peileiscott.top\/cs144-lab1\/","datePublished": "2021-06-26T16:20:44+08:00","dateModified": "2021-06-26T16:20:44+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "PeiLeiScott"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+            if (window.localStorage && localStorage.getItem('theme')) {
+                let theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark' || theme === 'black') {
+                    document.body.setAttribute('theme', theme);
+                } else {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            } else {
+                if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') {
+                    document.body.setAttribute('auto');
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                } else {
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            }
+            function getMeta(metaName) {
+                const metas = document.getElementsByTagName('meta'); 
+                for (let i = 0; i < metas.length; i++) {
+                    if (metas[i].getAttribute('name') === metaName) {
+                        return metas[i];
+                    }
+                }
+                return '';
+            }
+            let themeColorMeta = getMeta('theme-color');
+            if (document.body.getAttribute('theme') != 'light') {
+                themeColorMeta.content = '#000000';
+            }
+        </script>
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS144 lab1 详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cs144/"><i class="far fa-folder fa-fw"></i>CS144</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-26">2021-06-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1517 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;<span id="/cs144-lab1/" class="leancloud_visitors" data-flag-title="CS144 lab1 详解">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#实验中的细节点">实验中的细节点</a></li>
+    <li><a href="#map实现"><code>map</code>实现</a></li>
+    <li><a href="#deque实现"><code>deque</code>实现</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>实验指导说明：<a href="https://cs144.github.io/assignments/lab1.pdf" target="_blank" rel="noopener noreffer">https://cs144.github.io/assignments/lab1.pdf</a></p>
+</blockquote>
+<p>本实验的目的就是将接收方获取到的<code>TCP段(substrings/segments)</code>重组成有序的，不重复的，从而被我们在lab0中实现的<code>byte_stream</code>读取。虽然看起来很简单，但是其中细节还是不少，写了两天才弄懂实验所有的细节。。。</p>
+<h2 id="实验中的细节点">实验中的细节点</h2>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-2.51pv6at8ro40.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-2.51pv6at8ro40.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-2.51pv6at8ro40.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-2.51pv6at8ro40.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-2.51pv6at8ro40.png"
+        title="cs144-lab1-2"
+    /></p>
+<p>需要注意，虽然有的<code>substring</code>完成了重组(上图绿色部分)，但是只要没有被<code>byte_stream</code>读取，它还属于<code>stream_assembler</code>的一部分，因此它的大小也是算在<code>capacity</code>中的一部分的。每接收到一个新的<code>substring</code>时，我们都要检查下哪些部分可以进行重组(可能包括之前未被重组的部分，上图红色部分)并且被<code>byte_stream</code>写入。</p>
+<p>此外每次新来一个<code>substring</code>的时候需要根据<code>index</code>分情况讨论(具体见代码部分)；另外如果数据有一部分被舍弃掉的话，那么传进来的<code>eof</code>是无效的，这一点应该挺好理解的。总体来说，如果能弄懂下面这个测试用例的话，应该对本实验理解的差不多了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="n">ReassemblerTestHarness</span> <span class="n">test</span><span class="p">{</span><span class="mi">8</span><span class="p">};</span>
+
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SubmitSegment</span><span class="p">{</span><span class="s">&#34;abc&#34;</span><span class="p">,</span> <span class="mi">0</span><span class="p">});</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">BytesAssembled</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">NotAtEof</span><span class="p">{});</span>
+
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SubmitSegment</span><span class="p">{</span><span class="s">&#34;ghX&#34;</span><span class="p">,</span> <span class="mi">6</span><span class="p">}.</span><span class="n">with_eof</span><span class="p">(</span><span class="nb">true</span><span class="p">));</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">BytesAssembled</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">NotAtEof</span><span class="p">{});</span>
+
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">SubmitSegment</span><span class="p">{</span><span class="s">&#34;cdefg&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">});</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">BytesAssembled</span><span class="p">(</span><span class="mi">8</span><span class="p">));</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">BytesAvailable</span><span class="p">{</span><span class="s">&#34;abcdefgh&#34;</span><span class="p">});</span>
+<span class="n">test</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">NotAtEof</span><span class="p">{});</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="map实现"><code>map</code>实现</h2>
+<p>最开始我用的<code>map</code>来保存<code>substring</code>的，代码如下：</p>
+<p><code>stream_reassembler.hh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP">    <span class="n">std</span><span class="o">::</span><span class="n">map</span><span class="o">&lt;</span><span class="n">size_t</span><span class="p">,</span> <span class="kt">char</span><span class="o">&gt;</span> <span class="n">index2byte</span><span class="p">{};</span>
+    <span class="kt">bool</span> <span class="n">_eof</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+    <span class="n">size_t</span> <span class="n">_head_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">_unassembled_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ByteStream</span> <span class="n">_output</span><span class="p">;</span>  <span class="c1">//!&lt; The reassembled in-order byte stream
+</span><span class="c1"></span>    <span class="n">size_t</span> <span class="n">_capacity</span><span class="p">;</span>    <span class="c1">//!&lt; The maximum number of bytes
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>stream_reassembler.cc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="cp">#include</span> <span class="cpf">&#34;stream_reassembler.hh&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Dummy implementation of a stream reassembler.
+</span><span class="c1"></span>
+<span class="c1">// For Lab 1, please replace with a real implementation that passes the
+</span><span class="c1">// automated checks run by `make check_lab1`.
+</span><span class="c1"></span>
+<span class="c1">// You will need to add private members to the class declaration in `stream_reassembler.hh`
+</span><span class="c1"></span>
+<span class="c1">// template &lt;typename... Targs&gt;
+</span><span class="c1">// void DUMMY_CODE(Targs &amp;&amp;... /* unused */) {}
+</span><span class="c1"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">StreamReassembler</span><span class="o">::</span><span class="n">StreamReassembler</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">capacity</span><span class="p">)</span> <span class="o">:</span> <span class="n">_output</span><span class="p">(</span><span class="n">capacity</span><span class="p">),</span> <span class="n">_capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="c1">//! \details This function accepts a substring (aka a segment) of bytes,
+</span><span class="c1">//! possibly out-of-order, from the logical stream, and assembles any newly
+</span><span class="c1">//! contiguous substrings and writes them into the output stream in order.
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">push_substring</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="k">const</span> <span class="n">size_t</span> <span class="n">index</span><span class="p">,</span> <span class="k">const</span> <span class="kt">bool</span> <span class="n">eof</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// DUMMY_CODE(data, index, eof);
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">_head_index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">eof</span> <span class="o">&amp;&amp;</span> <span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">_output</span><span class="p">.</span><span class="n">end_input</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="n">flag</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">flag</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// size_t count = 0;
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">_head_index</span> <span class="o">&amp;&amp;</span> <span class="n">index2byte</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="n">index2byte</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">index2byte</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">index</span><span class="p">];</span>
+            <span class="c1">// count++;
+</span><span class="c1"></span>            <span class="n">_unassembled_bytes</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_head_index</span><span class="p">;</span> <span class="n">index2byte</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">!=</span> <span class="n">index2byte</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">str</span> <span class="o">+=</span> <span class="n">index2byte</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="n">index2byte</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="n">_head_index</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">_unassembled_bytes</span><span class="o">--</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">_output</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">flag</span> <span class="o">&amp;&amp;</span> <span class="n">eof</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_eof</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">_eof</span> <span class="o">&amp;&amp;</span> <span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">_output</span><span class="p">.</span><span class="n">end_input</span><span class="p">();</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">unassembled_bytes</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_unassembled_bytes</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">empty</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">unassembled_bytes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>测试结果(见下图)并不是太理想，虽然实验指导中说了不用过分追求效率，但是也给出了一个预期结果，就是每个测试用时不超过半秒。</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-1.5nkowm19fds0.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-1.5nkowm19fds0.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-1.5nkowm19fds0.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-1.5nkowm19fds0.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-1.5nkowm19fds0.png"
+        title="cs144-lab1-1"
+    /></p>
+<h2 id="deque实现"><code>deque</code>实现</h2>
+<p><code>map</code>实现中其实并没用到<code>map</code>的很多性质，只用来作为存放<code>bytes</code>的容器并且判断某个索引位置是否有数据。这样的话完全就可以换成数组之类的容器，同时用一个<code>bitmap</code>来标志某个位置是否有数据即可，最后我采用的是<code>deque</code>数据结构，其实只要满足先进先出的数据结构都可以。最后代码如下：</p>
+<p><code>stream_reassembler.hh</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP">    <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">_buf</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">_bitmap</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">_eof</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+    <span class="n">size_t</span> <span class="n">_head_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">size_t</span> <span class="n">_unassembled_bytes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="n">ByteStream</span> <span class="n">_output</span><span class="p">;</span>  <span class="c1">//!&lt; The reassembled in-order byte stream
+</span><span class="c1"></span>    <span class="n">size_t</span> <span class="n">_capacity</span><span class="p">;</span>    <span class="c1">//!&lt; The maximum number of bytes
+</span></code></pre></td></tr></table>
+</div>
+</div><p><code>stream_reassembler.cc</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="cp">#include</span> <span class="cpf">&#34;stream_reassembler.hh&#34;</span><span class="cp">
+</span><span class="cp"></span>
+<span class="c1">// Dummy implementation of a stream reassembler.
+</span><span class="c1"></span>
+<span class="c1">// For Lab 1, please replace with a real implementation that passes the
+</span><span class="c1">// automated checks run by `make check_lab1`.
+</span><span class="c1"></span>
+<span class="c1">// You will need to add private members to the class declaration in `stream_reassembler.hh`
+</span><span class="c1"></span>
+<span class="c1">// template &lt;typename... Targs&gt;
+</span><span class="c1">// void DUMMY_CODE(Targs &amp;&amp;... /* unused */) {}
+</span><span class="c1"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+<span class="n">StreamReassembler</span><span class="o">::</span><span class="n">StreamReassembler</span><span class="p">(</span><span class="k">const</span> <span class="n">size_t</span> <span class="n">capacity</span><span class="p">)</span>
+    <span class="o">:</span> <span class="n">_buf</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="sc">&#39;\0&#39;</span><span class="p">),</span> <span class="n">_bitmap</span><span class="p">(</span><span class="n">capacity</span><span class="p">,</span> <span class="nb">false</span><span class="p">),</span> <span class="n">_output</span><span class="p">(</span><span class="n">capacity</span><span class="p">),</span> <span class="n">_capacity</span><span class="p">(</span><span class="n">capacity</span><span class="p">)</span> <span class="p">{}</span>
+
+<span class="c1">//! \details This function accepts a substring (aka a segment) of bytes,
+</span><span class="c1">//! possibly out-of-order, from the logical stream, and assembles any newly
+</span><span class="c1">//! contiguous substrings and writes them into the output stream in order.
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">push_substring</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">data</span><span class="p">,</span> <span class="k">const</span> <span class="n">size_t</span> <span class="n">index</span><span class="p">,</span> <span class="k">const</span> <span class="kt">bool</span> <span class="n">eof</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// DUMMY_CODE(data, index, eof);
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">_head_index</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">eof</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_eof</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">eof</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">_eof</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="n">index</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_head_index</span> <span class="o">+</span> <span class="n">_output</span><span class="p">.</span><span class="n">remaining_capacity</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">index</span> <span class="o">+</span> <span class="n">data</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">_head_index</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">_bitmap</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">_head_index</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">_buf</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">_head_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">index</span><span class="p">];</span>
+                <span class="n">_bitmap</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">_head_index</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                <span class="n">_unassembled_bytes</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">;</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">_bitmap</span><span class="p">.</span><span class="n">front</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">str</span> <span class="o">+=</span> <span class="n">_buf</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+            <span class="n">_buf</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+            <span class="n">_buf</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="sc">&#39;\0&#39;</span><span class="p">);</span>
+            <span class="n">_bitmap</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+            <span class="n">_bitmap</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">size_t</span> <span class="n">len</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_unassembled_bytes</span> <span class="o">-=</span> <span class="n">len</span><span class="p">;</span>
+            <span class="n">_head_index</span> <span class="o">+=</span> <span class="n">len</span><span class="p">;</span>
+            <span class="n">_output</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">_eof</span> <span class="o">&amp;&amp;</span> <span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">_output</span><span class="p">.</span><span class="n">end_input</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">size_t</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">unassembled_bytes</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_unassembled_bytes</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="kt">bool</span> <span class="n">StreamReassembler</span><span class="o">::</span><span class="n">empty</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">unassembled_bytes</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span> <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>最后测试结果(见下图)也基本达到了预期结果，所有测试的用时加起来也才到一秒钟。</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-3.32g6thcyyhc0.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-3.32g6thcyyhc0.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-3.32g6thcyyhc0.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-3.32g6thcyyhc0.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab1-3.32g6thcyyhc0.png"
+        title="cs144-lab1-3"
+    /></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-26</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cs144-lab1/index.md" target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cs144%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">CS144，计算机网络</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/cs144-lab0/" class="prev" rel="prev" title="CS144 lab0 详解"><i class="fas fa-angle-left fa-fw"></i>CS144 lab0 详解</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.83.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://peileiscott.top" target="_blank" rel="noopener noreferrer">PeiLeiScott</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div>
+
+        
+        <div id="ex1" class="modal">
+            <div class="aa-input-container" id="aa-input-container">
+    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for titles or URIs..." name="search" autocomplete="off" />
+    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+    </svg>
+</div>
+
+        </div>
+        <link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"lBnQX5cEz5rozAxpmJQHllwx-gzGzoHsz","appKey":"uFt1oLMnGcWcqFJLDhBIikI3","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","meta":["nick","mail"],"pageSize":10,"placeholder":"Leave your comment here","recordIP":true,"visitor":true}},"data":{"id-1":"PeiLeiScott's Blog","id-2":"PeiLeiScott's Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"YLASGFW0ZN","algoliaIndex":"blog","algoliaSearchKey":"cfab05d37943d240fb4276960d13c8e5","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

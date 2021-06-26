@@ -4,7 +4,14 @@
         <link>https://peileiscott.top/posts/</link>
         <description>所有文章 | PeiLeiScott&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>1023757106peilei@gmail.com (PeiLeiScott)</managingEditor>
-            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Wed, 23 Jun 2021 23:55:44 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>1023757106peilei@gmail.com (PeiLeiScott)</webMaster><lastBuildDate>Sat, 26 Jun 2021 16:20:44 &#43;0800</lastBuildDate><atom:link href="https://peileiscott.top/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>CS144 lab1 详解</title>
+    <link>https://peileiscott.top/cs144-lab1/</link>
+    <pubDate>Sat, 26 Jun 2021 16:20:44 &#43;0800</pubDate>
+    <author>PeiLeiScott</author>
+    <guid>https://peileiscott.top/cs144-lab1/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>CS144 lab0 详解</title>
     <link>https://peileiscott.top/cs144-lab0/</link>
     <pubDate>Wed, 23 Jun 2021 23:55:44 &#43;0800</pubDate>
