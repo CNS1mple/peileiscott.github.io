@@ -80,6 +80,32 @@
         "license": ""
     },
     {
+        "title": "CS144 lab2 详解",
+        "uri": "cs144-lab2",
+        "content": "https   cs144 github io assignments lab2 pdf         TCP       segmentreceived    TCP  TCP segment        lab    bytestream streamreassembler       ackno   windowsize   ack win_size                                                        stream_index  64 bit  seqno  32 bit          TCP                   20       Payload              TCP  seqno ackno  4       32 bit                        lab1 streamreassembler    index    64 bit        streamreassembler            ack                        absolute seqno stream index                                 seqno absolute seqno         absolute seqno   seqno wrap                       unwrap             unwrap              n       isn  initial sequence number  checkpoint                      offset   isn   2 32   2  n   1   offset   1    2 32   2    3      32            offset  absolute seqno       offset            offset offset   2 32 offset   2   2 32 offset   3   2 32          checkpoint                      checkpoint                          checkpoint   A   2 32   B       checkpoint               A 1    2 32   offset A   2 32   offset  A 1    2 32   offset                            A              checkpoint             A  0   A 1    2 32   offset                                CPP WrappingInt32 wrap uint64_t n  WrappingInt32 isn       DUMMY_CODE n  isn   return isn   static_cast n     uint64t unwrap WrappingInt32 n  WrappingInt32 isn  uint64t checkpoint       DUMMY_CODE n  isn  checkpoint   uint32t offset   n rawvalue     isn raw_value    uint64t mask   staticcast UINT32_MAX  num2     checkpoint   num2     num2   checkpoint   uint64_t num3    top32    1ul TCPReceiver  ackno   const      Return empty no SYN received   synrecved    return nullopt    uint64t absseqno   streamout   byteswritten       FIN accounts one byte  sure reassembler    successfully received EOF signal ended input stream     Otherwise  something went wrong FIN means nothing   finrecved    streamout   inputended      abs_seqno      return optional wrap absseqno   1  isn        window_size   windowsize   tcpreceiver                            lab0 lab1  bytestream streamreassembler                       bytestream  remainingcapacity",
+        "objectID": "cs144-lab2",
+        "date": "2021-06-27T16:55:11.000Z",
+        "lastmod": "2021-06-27T16:55:11.000Z",
+        "draft": false,
+        "description": "",
+        "tags": [
+            "CS144，计算机网络"
+        ],
+        "categories": [
+            "CS144"
+        ],
+        "hiddenFromHomePage": false,
+        "hiddenFromSearch": false,
+        "toc": {
+            "enable": true
+        },
+        "math": {
+            "enable": true
+        },
+        "lightgallery": false,
+        "license": ""
+    },
+    {
         "title": "Ubuntu下包管理器apt常见命令",
         "uri": "ubuntu-apt-command",
         "content": "Ubuntu apt              Linux           apt update  shell sudo apt update                    apt update                           apt upgrade                         shell        sudo apt upgrade                            shell          apt list   upgradeable         sudo apt upgrade                  y n                  apt upgrade    y Flag  shell sudo apt upgrade  y                  apt update apt upgrade      shell sudo apt update    sudo apt upgrade  y   apt install                shell sudo apt install                  y n                  apt install    y Flag  shell sudo apt install  y            apt install                                  version  shell    mysql 5 7 sudo apt install mysql server 5 7   apt remove purge                shell apt remove                    sudo apt remove                                          sudo apt autoremove apt purge              sudo apt purge       apt list  shell sudo apt list   apt list                                                grep        shell sudo apt list   grep package_name                        shell sudo apt list   installed                    shell sudo apt list   upgradeable   apt show  shell sudo apt show package_name   apt show",

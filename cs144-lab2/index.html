@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>CS144 lab2 详解 - PeiLeiScott&#39;s Blog</title><meta name="Description" content="本站主要用来收集整理资料、记录学习过程。"><meta property="og:title" content="CS144 lab2 详解" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://peileiscott.top/cs144-lab2/" /><meta property="og:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-06-28T00:55:11&#43;08:00" />
+<meta property="article:modified_time" content="2021-06-28T00:55:11&#43;08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cat.5e56ri7egjc0.jpg"/>
+
+<meta name="twitter:title" content="CS144 lab2 详解"/>
+<meta name="twitter:description" content=""/>
+<meta name="application-name" content="PeiLeiScott&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="PeiLeiScott&#39;s Blog">
+
+<meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://peileiscott.top/cs144-lab2/" /><link rel="prev" href="https://peileiscott.top/cs144-lab1/" /><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/normalize/normalize.min.css">
+    <noscript><link rel="stylesheet" href="/lib/normalize/normalize.min.css"></noscript><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/fontawesome-free/all.min.css">
+    <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="/lib/animate/animate.min.css">
+    <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><link rel="stylesheet" href="/css/search.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "CS144 lab2 详解",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/peileiscott.top\/cs144-lab2\/"
+        },"genre": "posts","keywords": "CS144，计算机网络","wordcount":  2603 ,
+        "url": "https:\/\/peileiscott.top\/cs144-lab2\/","datePublished": "2021-06-28T00:55:11+08:00","dateModified": "2021-06-28T00:55:11+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "PeiLeiScott"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">
+            if (window.localStorage && localStorage.getItem('theme')) {
+                let theme = localStorage.getItem('theme');
+                if (theme === 'light' || theme === 'dark' || theme === 'black') {
+                    document.body.setAttribute('theme', theme);
+                } else {
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            } else {
+                if ('auto' === 'light' || 'auto' === 'dark' || 'auto' === 'black') {
+                    document.body.setAttribute('auto');
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                } else {
+                    window.localStorage && localStorage.setItem('theme', 'auto');
+                    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        document.body.setAttribute('theme', 'dark');
+                    }
+                    else {
+                        document.body.setAttribute('theme', 'light');
+                    }
+                }
+            }
+            function getMeta(metaName) {
+                const metas = document.getElementsByTagName('meta'); 
+                for (let i = 0; i < metas.length; i++) {
+                    if (metas[i].getAttribute('name') === metaName) {
+                        return metas[i];
+                    }
+                }
+                return '';
+            }
+            let themeColorMeta = getMeta('theme-color');
+            if (document.body.getAttribute('theme') != 'light') {
+                themeColorMeta.content = '#000000';
+            }
+        </script>
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 所有文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="PeiLeiScott&#39;s Blog"><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">所有文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="https://github.com/PeiLeiScott" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+        <h2 class="toc-title">目录</h2>
+        <div class="toc-content" id="toc-content-auto"></div>
+    </div><script>document.body.setAttribute("pageStyle", "normal")</script><script>document.body.setAttribute("autoTOC", "true")</script><article class="page single"><h1 class="single-title animate__animated animate__flipInX">CS144 lab2 详解</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://peileiscott.top" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>PeiLeiScott</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/cs144/"><i class="far fa-folder fa-fw"></i>CS144</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-06-28">2021-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2603 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;<span id="/cs144-lab2/" class="leancloud_visitors" data-flag-title="CS144 lab2 详解">
+                        <i class="far fa-eye fa-fw"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;次阅读
+                    </span>&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#stream_index-64-bit和seqno-32-bit之间的转换"><code>stream_index (64-bit)</code>和<code>seqno (32-bit)</code>之间的转换</a></li>
+    <li><a href="#实现tcp接收端">实现TCP接收端</a>
+      <ul>
+        <li><a href="#segment_received"><code>segment_received()</code></a></li>
+        <li><a href="#ackno"><code>ackno()</code></a></li>
+        <li><a href="#window_size"><code>window_size()</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#实验结果截图">实验结果截图</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p>实验指导说明：<a href="https://cs144.github.io/assignments/lab2.pdf" target="_blank" rel="noopener noreffer">https://cs144.github.io/assignments/lab2.pdf</a></p>
+</blockquote>
+<p>本实验目的为完成TCP的接收端，调用<code>segment_received()</code>接受TCP包(TCP segment)从而被前面两个lab中实现的<code>byte_stream</code>和<code>stream_reassembler</code>使用，同时调用<code>ackno()</code>和<code>window_size()</code>将<code>ack</code>和<code>win_size</code>返回给发送方，发送方接收到后可以确定接收方是否正确接受到上一个包，以及下一次发送包的大小范围。官方解释如下图：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-1.3w91wydks940.png"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-1.3w91wydks940.png, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-1.3w91wydks940.png 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-1.3w91wydks940.png 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-1.3w91wydks940.png"
+        title="cs144-lab2-1"
+    /></p>
+<h2 id="stream_index-64-bit和seqno-32-bit之间的转换"><code>stream_index (64-bit)</code>和<code>seqno (32-bit)</code>之间的转换</h2>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-2.5l1t56m3c6o0.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-2.5l1t56m3c6o0.jpg, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-2.5l1t56m3c6o0.jpg 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-2.5l1t56m3c6o0.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-2.5l1t56m3c6o0.jpg"
+        title="cs144-lab2-2"
+    /></p>
+<p>上图为TCP报文格式，其中红色区域为报头部分，共占20个字节，下方的<code>Payload</code>为数据部分。需要注意的是，在TCP包中<code>seqno</code>和<code>ackno</code>只占4个字节，也就是32-bit(原因在实验指导中提到了，有兴趣可以看看)。但是lab1中<code>stream_reassembler</code>写数据时<code>index</code>使用的是64-bit的数据，因此在向<code>stream_reassembler</code>写入数据以及向发送端返回<code>ack</code>之前需要完成相应的转换。</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg"
+        title="cs144-lab2-3"
+    /></p>
+<p>所有细节点都在上图中，<code>absolute seqno</code>和<code>stream index</code>之间的转换比较简单，只需要加一或减一即可，所以本实验我们只需要实现<code>seqno</code>和<code>absolute seqno</code>之间的转换。其中将<code>absolute seqno</code>转换为<code>seqno</code>(<code>wrap()函数</code>)比较简单，这里就不多说了，主要提一下<code>unwrap()</code>函数实现中的细节点。</p>
+<p><code>unwrap()</code>函数中有三个参数：序列号<code>n</code>、最初的序列号<code>isn (initial sequence number)</code>和<code>checkpoint</code>(不知道该怎么翻译。。。)</p>
+<ul>
+<li>第一步算出偏移量<code>offset</code>，比如<code>isn = 2^32 - 2, n = 1</code>的话，<code>offset = 1 - (2^32 - 2) = 3</code>，注意这里是32位无符号数的减法。</li>
+<li>算出<code>offset</code>后，<code>absolute seqno</code>并不是直接等于<code>offset</code>，而是有很多种可能情况，<code>offset</code>，<code>offset + 2^32</code>，<code>offset + 2 * 2^32</code>，<code>offset + 3 * 2^32</code>等等都有可能，这也是<code>checkpoint</code>存在的必要，我们需要从所有可能的情况中找到离<code>checkpoint</code>最近的那个数。</li>
+<li>接下来这步是最关键的一步。我们可以将<code>checkpoint</code>表示成<code>A * 2^32 + B</code>的形式，那么离<code>checkpoint</code>最近的数就只有下面三种情况：<code>(A-1) * 2^32 + offset</code>，<code>A * 2^32 + offset</code>，<code>(A+1) * 2^32 + offset</code>(不明白的话可以在纸上写一写)。因此我们要通过位运算求出A的值，然后判断下三个数哪个离<code>checkpoint</code>最近即可。需要注意的是，当A等于0时，<code>(A-1) * 2^32 + offset</code>是没有意义的，只需要考虑其他两个数就可以了。</li>
+</ul>
+<p>代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="n">WrappingInt32</span> <span class="nf">wrap</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">n</span><span class="p">,</span> <span class="n">WrappingInt32</span> <span class="n">isn</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// DUMMY_CODE(n, isn);
+</span><span class="c1"></span>    <span class="k">return</span> <span class="n">isn</span> <span class="o">+</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint32_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">uint64_t</span> <span class="nf">unwrap</span><span class="p">(</span><span class="n">WrappingInt32</span> <span class="n">n</span><span class="p">,</span> <span class="n">WrappingInt32</span> <span class="n">isn</span><span class="p">,</span> <span class="kt">uint64_t</span> <span class="n">checkpoint</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// DUMMY_CODE(n, isn, checkpoint);
+</span><span class="c1"></span>    <span class="kt">uint32_t</span> <span class="n">offset</span> <span class="o">=</span> <span class="n">n</span><span class="p">.</span><span class="n">raw_value</span><span class="p">()</span> <span class="o">-</span> <span class="n">isn</span><span class="p">.</span><span class="n">raw_value</span><span class="p">();</span>
+    <span class="kt">uint64_t</span> <span class="n">mask</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint64_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">UINT32_MAX</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">top32</span> <span class="o">=</span> <span class="n">checkpoint</span> <span class="o">&amp;</span> <span class="n">mask</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">num1</span> <span class="o">=</span> <span class="p">(</span><span class="n">top32</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1ul</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">abs1</span> <span class="o">=</span> <span class="n">checkpoint</span> <span class="o">-</span> <span class="n">num1</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">num2</span> <span class="o">=</span> <span class="n">top32</span> <span class="o">+</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">abs2</span> <span class="o">=</span> <span class="p">(</span><span class="n">checkpoint</span> <span class="o">&gt;</span> <span class="n">num2</span><span class="p">)</span> <span class="o">?</span> <span class="p">(</span><span class="n">checkpoint</span> <span class="o">-</span> <span class="n">num2</span><span class="p">)</span> <span class="o">:</span> <span class="p">(</span><span class="n">num2</span> <span class="o">-</span> <span class="n">checkpoint</span><span class="p">);</span>
+    <span class="kt">uint64_t</span> <span class="n">num3</span> <span class="o">=</span> <span class="p">(</span><span class="n">top32</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1ul</span> <span class="o">&lt;&lt;</span> <span class="mi">32</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span><span class="p">;</span>
+    <span class="kt">uint64_t</span> <span class="n">abs3</span> <span class="o">=</span> <span class="n">num3</span> <span class="o">-</span> <span class="n">checkpoint</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">top32</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">abs2</span> <span class="o">&lt;</span> <span class="n">abs3</span><span class="p">)</span> <span class="o">?</span> <span class="nl">num2</span> <span class="p">:</span> <span class="n">num3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">abs1</span> <span class="o">&lt;</span> <span class="n">abs2</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">abs1</span> <span class="o">&lt;</span> <span class="n">abs3</span><span class="p">)</span> <span class="o">?</span> <span class="nl">num1</span> <span class="p">:</span> <span class="n">num3</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">abs2</span> <span class="o">&lt;</span> <span class="n">abs3</span><span class="p">)</span> <span class="o">?</span> <span class="nl">num2</span> <span class="p">:</span> <span class="n">num3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="实现tcp接收端">实现TCP接收端</h2>
+<h3 id="segment_received"><code>segment_received()</code></h3>
+<p>TCP接收端一共需要经过以下几个状态：</p>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-4.1yzga6hnjy00.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-4.1yzga6hnjy00.jpg, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-4.1yzga6hnjy00.jpg 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-4.1yzga6hnjy00.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-4.1yzga6hnjy00.jpg"
+        title="cs144-lab2-4"
+    /></p>
+<ul>
+<li>最开始处于<code>listen</code>监听状态，等待收到发送方发来的<code>SYN</code>标志数据传输的开始。对应下方代码的 11-13 行。</li>
+<li>收到了<code>SYN</code>后进入第二个状态，将接收到的第一个<code>SYN</code>标志位为1的序列号作为<code>isn</code>，设置<code>_syn_recved</code>为true。第一次时不需要将<code>ack</code>转换为<code>stream_index</code>，因为此时<code>stream_index</code>就是0，直接调用<code>stream_reassembler</code>的<code>push_substring()</code>方法即可，但是在判断<code>eof</code>时需要注意第一次也有可能<code>FIN</code>标志位也为1。除了第一次之外，每次都需要计算<code>checkpoint</code>，然后调用<code>unwrap()</code>函数将<code>ackno</code>转换为<code>abs_ackno</code>，最后减一得到<code>stream_index</code>。</li>
+<li>收到<code>FIN</code>进入最后一个状态。设置<code>_fin_recved</code>和<code>eof</code>为true，标志数据输入完毕，如果从<code>tcp_receiver</code>到<code>stream_reassembler</code>和<code>byte_stream</code>之间传输没问题的话，<code>byte_stream</code>就应该调用<code>input_ended()</code>停止接受数据了。</li>
+</ul>
+<p>代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="c1">// tcp_receiver.hh
+</span><span class="c1"></span><span class="n">WrappingInt32</span> <span class="n">_isn</span><span class="p">{</span><span class="n">WrappingInt32</span><span class="p">(</span><span class="mi">0</span><span class="p">)};</span>
+<span class="kt">bool</span> <span class="n">_syn_recved</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+<span class="kt">bool</span> <span class="n">_fin_recved</span><span class="p">{</span><span class="nb">false</span><span class="p">};</span>
+
+<span class="c1">// tcp_receiver.cc
+</span><span class="c1"></span><span class="kt">void</span> <span class="n">TCPReceiver</span><span class="o">::</span><span class="n">segment_received</span><span class="p">(</span><span class="k">const</span> <span class="n">TCPSegment</span> <span class="o">&amp;</span><span class="n">seg</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// DUMMY_CODE(seg);
+</span><span class="c1"></span>    <span class="k">const</span> <span class="n">TCPHeader</span> <span class="n">header</span> <span class="o">=</span> <span class="n">seg</span><span class="p">.</span><span class="n">header</span><span class="p">();</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_syn_recved</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">header</span><span class="p">.</span><span class="n">syn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">string</span> <span class="n">data</span> <span class="o">=</span> <span class="n">seg</span><span class="p">.</span><span class="n">payload</span><span class="p">().</span><span class="n">copy</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="n">eof</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="c1">// Receive the first SYN
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_syn_recved</span> <span class="o">&amp;&amp;</span> <span class="n">header</span><span class="p">.</span><span class="n">syn</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_syn_recved</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">_isn</span> <span class="o">=</span> <span class="n">header</span><span class="p">.</span><span class="n">seqno</span><span class="p">;</span>
+        <span class="c1">// It&#39;s possible that the header have also FIN flag set.
+</span><span class="c1"></span>        <span class="k">if</span> <span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">fin</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">_fin_recved</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="n">eof</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">_reassembler</span><span class="p">.</span><span class="n">push_substring</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">eof</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Receive the FIN
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">_syn_recved</span> <span class="o">&amp;&amp;</span> <span class="n">header</span><span class="p">.</span><span class="n">fin</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">_fin_recved</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="n">eof</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint64_t</span> <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">stream_out</span><span class="p">().</span><span class="n">bytes_written</span><span class="p">();</span>
+    <span class="kt">uint64_t</span> <span class="n">abs_seqno</span> <span class="o">=</span> <span class="n">unwrap</span><span class="p">(</span><span class="n">header</span><span class="p">.</span><span class="n">seqno</span><span class="p">,</span> <span class="n">_isn</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">);</span>
+    <span class="kt">uint64_t</span> <span class="n">stream_index</span> <span class="o">=</span> <span class="n">abs_seqno</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">_reassembler</span><span class="p">.</span><span class="n">push_substring</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">stream_index</span><span class="p">,</span> <span class="n">eof</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="ackno"><code>ackno()</code></h3>
+<p>接收到数据后，<code>tcp_receiver</code>需要向发送方返回一个<code>ack</code>数据，发送方可以通过这个<code>ack</code>知道<code>tcp_receiver</code>是否成功收到上一个包，而这个<code>ack</code>就等于<code>tcp_receiver</code>下一步要接收的包的首字节。</p>
+<ul>
+<li>如果还没有接收到<code>SYN</code>的话，直接返回空数据。</li>
+<li>通过已经写入的字节数获取<code>abs_seqno</code>的值。比如在下图中，<code>bytes_written() = 3</code>，而<code>FIN</code>之前，也就是写入的最后的一个字节的<code>abs_seqno</code>就等于3，如果没有<code>FIN</code>的话，那么<code>ack</code>就等于<code>wrap(abs_seqno + 1, isn)</code>；有<code>FIN</code>的话，注意！！！只有当通过<code>FIN</code>标志得到的<code>eof</code>成功传到<code>stream_reassembler</code>和<code>byte_stream</code>后，<code>FIN</code>标志才真正生效了，也即此时<code>byte_stream</code>应该已经调用了<code>input_ended()</code>函数停止接收数据，这时候<code>abs_seqno</code>就不再是3而应该是4了。对应下方代码 11-13 行。</li>
+</ul>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-3.5gwqgmmqsxc0.jpg"
+        title="cs144-lab2-3"
+    /></p>
+<p>代码实现如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CPP" data-lang="CPP"><span class="n">optional</span><span class="o">&lt;</span><span class="n">WrappingInt32</span><span class="o">&gt;</span> <span class="n">TCPReceiver</span><span class="o">::</span><span class="n">ackno</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+    <span class="c1">// Return empty if no SYN has been received
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_syn_recved</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">nullopt</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">uint64_t</span> <span class="n">abs_seqno</span> <span class="o">=</span> <span class="n">stream_out</span><span class="p">().</span><span class="n">bytes_written</span><span class="p">();</span>
+    <span class="c1">// FIN also accounts for one byte, but make sure that the reassembler
+</span><span class="c1"></span>    <span class="c1">// have successfully received the EOF signal and ended the input stream. 
+</span><span class="c1"></span>    <span class="c1">// Otherwise, something went wrong and The FIN means nothing.
+</span><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">_fin_recved</span> <span class="o">&amp;&amp;</span> <span class="n">stream_out</span><span class="p">().</span><span class="n">input_ended</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">abs_seqno</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">optional</span><span class="o">&lt;</span><span class="n">WrappingInt32</span><span class="o">&gt;</span><span class="p">(</span><span class="n">wrap</span><span class="p">(</span><span class="n">abs_seqno</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">_isn</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="window_size"><code>window_size()</code></h3>
+<p><code>window_size</code>标志着<code>tcp_receiver</code>还能容纳多少数据，从而告诉发送方下次发送数据的范围。通过lab0和lab1知道<code>byte_stream</code>和<code>stream_reassembler</code>其实是共用一个缓冲区的，因此剩余的空间直接调用<code>byte_stream</code>里的<code>remaining_capacity()</code>函数就可以了。</p>
+<h2 id="实验结果截图">实验结果截图</h2>
+<p><img
+        class="lazyload"
+        data-src="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-5.4qr0wt6l1fo0.jpg"
+        data-srcset="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-5.4qr0wt6l1fo0.jpg, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-5.4qr0wt6l1fo0.jpg 1.5x, https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-5.4qr0wt6l1fo0.jpg 2x"
+        data-sizes="auto"
+        alt="https://cdn.jsdelivr.net/gh/PeiLeiScott/image-hosting@master/cs144-lab2-5.4qr0wt6l1fo0.jpg"
+        title="cs144-lab2-5"
+    /></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-06-28</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cs144-lab2/index.md" target="_blank" rel="noopener noreferrer">阅读原始文档</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cs144%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">CS144，计算机网络</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/cs144-lab1/" class="prev" rel="prev" title="CS144 lab1 详解"><i class="fas fa-angle-left fa-fw"></i>CS144 lab1 详解</a></div>
+</div>
+<div id="comments"><div id="valine" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://valine.js.org/">Valine</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.84.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/HEIGE-PCloud/DoIt" target="_blank" rel="noopener noreffer" title="DoIt 0.2.10"><i class="far fa-edit fa-fw"></i> DoIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2020 - 2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://peileiscott.top" target="_blank" rel="noopener noreferrer">PeiLeiScott</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div></footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div>
+
+        
+        <div id="ex1" class="modal">
+            <div class="aa-input-container" id="aa-input-container">
+    <input type="search" id="aa-search-input" class="aa-input-search" placeholder="Search for titles or URIs..." name="search" autocomplete="off" />
+    <svg class="aa-input-icon" viewBox="654 -372 1664 1664">
+        <path d="M1806,332c0-123.3-43.8-228.8-131.5-316.5C1586.8-72.2,1481.3-116,1358-116s-228.8,43.8-316.5,131.5  C953.8,103.2,910,208.7,910,332s43.8,228.8,131.5,316.5C1129.2,736.2,1234.7,780,1358,780s228.8-43.8,316.5-131.5  C1762.2,560.8,1806,455.3,1806,332z M2318,1164c0,34.7-12.7,64.7-38,90s-55.3,38-90,38c-36,0-66-12.7-90-38l-343-342  c-119.3,82.7-252.3,124-399,124c-95.3,0-186.5-18.5-273.5-55.5s-162-87-225-150s-113-138-150-225S654,427.3,654,332  s18.5-186.5,55.5-273.5s87-162,150-225s138-113,225-150S1262.7-372,1358-372s186.5,18.5,273.5,55.5s162,87,225,150s113,138,150,225  S2062,236.7,2062,332c0,146.7-41.3,279.7-124,399l343,343C2305.7,1098.7,2318,1128.7,2318,1164z" />
+    </svg>
+</div>
+
+        </div>
+        <link rel="stylesheet" href="/lib/valine/valine.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script type="text/javascript" src="/lib/valine/Valine.min.js"></script><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/typeit/typeit.min.js"></script><script type="text/javascript" src="/lib/katex/katex.min.js"></script><script type="text/javascript" src="/lib/katex/auto-render.min.js"></script><script type="text/javascript" src="/lib/katex/copy-tex.min.js"></script><script type="text/javascript" src="/lib/katex/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"valine":{"appId":"lBnQX5cEz5rozAxpmJQHllwx-gzGzoHsz","appKey":"uFt1oLMnGcWcqFJLDhBIikI3","avatar":"mp","el":"#valine","emojiCDN":"https://cdn.jsdelivr.net/npm/emoji-datasource-google@5.0.1/img/google/64/","emojiMaps":{"100":"1f4af.png","alien":"1f47d.png","anger":"1f4a2.png","angry":"1f620.png","anguished":"1f627.png","astonished":"1f632.png","black_heart":"1f5a4.png","blue_heart":"1f499.png","blush":"1f60a.png","bomb":"1f4a3.png","boom":"1f4a5.png","broken_heart":"1f494.png","brown_heart":"1f90e.png","clown_face":"1f921.png","cold_face":"1f976.png","cold_sweat":"1f630.png","confounded":"1f616.png","confused":"1f615.png","cry":"1f622.png","crying_cat_face":"1f63f.png","cupid":"1f498.png","dash":"1f4a8.png","disappointed":"1f61e.png","disappointed_relieved":"1f625.png","dizzy":"1f4ab.png","dizzy_face":"1f635.png","drooling_face":"1f924.png","exploding_head":"1f92f.png","expressionless":"1f611.png","face_vomiting":"1f92e.png","face_with_cowboy_hat":"1f920.png","face_with_hand_over_mouth":"1f92d.png","face_with_head_bandage":"1f915.png","face_with_monocle":"1f9d0.png","face_with_raised_eyebrow":"1f928.png","face_with_rolling_eyes":"1f644.png","face_with_symbols_on_mouth":"1f92c.png","face_with_thermometer":"1f912.png","fearful":"1f628.png","flushed":"1f633.png","frowning":"1f626.png","ghost":"1f47b.png","gift_heart":"1f49d.png","green_heart":"1f49a.png","grimacing":"1f62c.png","grin":"1f601.png","grinning":"1f600.png","hankey":"1f4a9.png","hear_no_evil":"1f649.png","heart":"2764-fe0f.png","heart_decoration":"1f49f.png","heart_eyes":"1f60d.png","heart_eyes_cat":"1f63b.png","heartbeat":"1f493.png","heartpulse":"1f497.png","heavy_heart_exclamation_mark_ornament":"2763-fe0f.png","hole":"1f573-fe0f.png","hot_face":"1f975.png","hugging_face":"1f917.png","hushed":"1f62f.png","imp":"1f47f.png","innocent":"1f607.png","japanese_goblin":"1f47a.png","japanese_ogre":"1f479.png","joy":"1f602.png","joy_cat":"1f639.png","kiss":"1f48b.png","kissing":"1f617.png","kissing_cat":"1f63d.png","kissing_closed_eyes":"1f61a.png","kissing_heart":"1f618.png","kissing_smiling_eyes":"1f619.png","laughing":"1f606.png","left_speech_bubble":"1f5e8-fe0f.png","love_letter":"1f48c.png","lying_face":"1f925.png","mask":"1f637.png","money_mouth_face":"1f911.png","nauseated_face":"1f922.png","nerd_face":"1f913.png","neutral_face":"1f610.png","no_mouth":"1f636.png","open_mouth":"1f62e.png","orange_heart":"1f9e1.png","partying_face":"1f973.png","pensive":"1f614.png","persevere":"1f623.png","pleading_face":"1f97a.png","pouting_cat":"1f63e.png","purple_heart":"1f49c.png","rage":"1f621.png","relaxed":"263a-fe0f.png","relieved":"1f60c.png","revolving_hearts":"1f49e.png","right_anger_bubble":"1f5ef-fe0f.png","robot_face":"1f916.png","rolling_on_the_floor_laughing":"1f923.png","scream":"1f631.png","scream_cat":"1f640.png","see_no_evil":"1f648.png","shushing_face":"1f92b.png","skull":"1f480.png","skull_and_crossbones":"2620-fe0f.png","sleeping":"1f634.png","sleepy":"1f62a.png","slightly_frowning_face":"1f641.png","slightly_smiling_face":"1f642.png","smile":"1f604.png","smile_cat":"1f638.png","smiley":"1f603.png","smiley_cat":"1f63a.png","smiling_face_with_3_hearts":"1f970.png","smiling_imp":"1f608.png","smirk":"1f60f.png","smirk_cat":"1f63c.png","sneezing_face":"1f927.png","sob":"1f62d.png","space_invader":"1f47e.png","sparkling_heart":"1f496.png","speak_no_evil":"1f64a.png","speech_balloon":"1f4ac.png","star-struck":"1f929.png","stuck_out_tongue":"1f61b.png","stuck_out_tongue_closed_eyes":"1f61d.png","stuck_out_tongue_winking_eye":"1f61c.png","sunglasses":"1f60e.png","sweat":"1f613.png","sweat_drops":"1f4a6.png","sweat_smile":"1f605.png","thinking_face":"1f914.png","thought_balloon":"1f4ad.png","tired_face":"1f62b.png","triumph":"1f624.png","two_hearts":"1f495.png","unamused":"1f612.png","upside_down_face":"1f643.png","weary":"1f629.png","white_frowning_face":"2639-fe0f.png","white_heart":"1f90d.png","wink":"1f609.png","woozy_face":"1f974.png","worried":"1f61f.png","yawning_face":"1f971.png","yellow_heart":"1f49b.png","yum":"1f60b.png","zany_face":"1f92a.png","zipper_mouth_face":"1f910.png","zzz":"1f4a4.png"},"enableQQ":false,"highlight":true,"lang":"zh-cn","meta":["nick","mail"],"pageSize":10,"placeholder":"Leave your comment here","recordIP":true,"visitor":true}},"data":{"id-1":"PeiLeiScott's Blog","id-2":"PeiLeiScott's Blog"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"YLASGFW0ZN","algoliaIndex":"blog","algoliaSearchKey":"cfab05d37943d240fb4276960d13c8e5","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
